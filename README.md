@@ -21,5 +21,6 @@ In your home directory folder, type:
 Then issue the following commands:
   
     ~/aws-env/initenv.sh
+    . ~/bash_aliases
     
 Bob Yantosca ~ 11 Dec 2018 ~ yantosca@seas.harvard.edu

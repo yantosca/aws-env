@@ -50,6 +50,7 @@ alias proc="ps -ef | grep $USER | sort"
 alias pu="rm *~"
 alias pua="rm .*~"
 alias sb=". ~/.bashrc"
+alias sba=". ~/.bash_aliases"
 alias ssh="ssh -YA"
 alias tf="tail --follow"
 alias zap="kill -9"
@@ -74,17 +75,25 @@ alias llh="ls -lh"
 # Invoking local scripts
 alias ncpl="~/aws-env/bin/nc_chunk.pl"
 alias isco="~/aws-env/bin/isCoards"
-alias ncd="~/aws-env/bin/ncd"
 
 # Bob Y's testing: don't turn on netCDF compression, which helps to
 # keep file sizes the same, so that they can be diffed in debugging
 unset NC_NODEFLATE
 export NC_NODEFLATE=y
 
+# Call ncdump and pipe the result to less
+function ncd() {
+  /usr/bin/ncdump -cts $1 | less
+}
+
 # Convert a windows file to Unix
 function dos2unix() { 
    awk '{ sub("\r$", ""); print }' $1 > $2
 }
+
+# GCHP convenience aliases
+alias mco="make cleanup_output"
+alias mcs="make compile_standard"
 
 #==============================================================================
 # %%%%% Personal settings: Git commands %%%%%
