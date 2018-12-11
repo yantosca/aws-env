@@ -1,0 +1,36 @@
+#!/bin/tcsh -f
+
+#EOC
+#------------------------------------------------------------------------------
+#                  GEOS-Chem Global Chemical Transport Model                  !
+#------------------------------------------------------------------------------
+#BOP
+#
+# !MODULE: ncd
+#
+# !DESCRIPTION: Wrapper for the netCDF "ncdump" command.  This is a useful
+#  shortcut for displaying header information from netCDF files
+#\\
+#\\
+# !REMARKS:
+#  Parameters passed to ncdump:
+#  -c : Print the COARDS/CF index vectors (e.g time, lev, lon, lat)
+#  -t : Display time dimension in YYYY-MM-DD format
+#
+# !REVISION HISTORY:
+#  28 Jul 2015 - R. Yantosca - Initial version
+#EOP
+#------------------------------------------------------------------------------
+#BOC
+
+# Exit if not passed 
+if ( $#argv != 1 ) then
+  echo "Usage: ncd FILENAME"
+  exit(1)
+endif
+
+# Use the version of ncdump in the currently-loaded netCDF module
+ncdump -cts $1 | less
+
+# Exit normally
+exit(0)

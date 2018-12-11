@@ -1,0 +1,39 @@
+#------------------------------------------------------------------------------
+#          Harvard University Atmospheric Chemistry Modeling Group            !
+#------------------------------------------------------------------------------
+#BOP
+#
+# !MODULE: .XDefaults
+#
+# !DESCRIPTION: The .Xdefaults file specifies defaults for Xterminal windows
+#  (and other X11 programs, if necessary).
+#\\
+#\\
+# !REMARKS:
+#  This version of .Xdefaults is customized to the color scheme used
+#  by Bob Yantosca.  You can edit the settings as necessary.
+#                                                                             .
+#  Based on examples from:
+#    http://www2.its.strath.ac.uk/courses/x/subsection3_9_4.html
+#    http://infohost.nmt.edu/tcc/help/pubs/dotfiles/xdefaults.html
+#
+# !REVISION HISTORY: 
+#  21 Jun 2012 - R. Yantosca - Initial version
+#EOP
+#------------------------------------------------------------------------------
+#BOC
+
+# Specific settings for X-terminal
+XTerm*Background:      DarkSlateGray
+XTerm*Foreground:      LemonChiffon
+XTerm*CursorColor:     FireBrick
+XTerm*TermType:        xterm
+XTerm*Geometry:        90x26+0+0
+XTerm*Font:            10x20
+XTerm*SaveLines:       500
+XTerm*ScrollBar:       true
+XTerm*TitleBar:        true
+XTerm*TextUnderIcon:   true
+XTerm*AllowIconInput:  true
+XTerm*AutoRaise:       true
+#EOC
