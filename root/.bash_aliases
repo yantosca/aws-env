@@ -95,6 +95,10 @@ function dos2unix() {
 alias mco="make cleanup_output"
 alias mcs="make compile_standard"
 
+function rungchp() {
+  mpirun -np $1 ./geos | tee gchp.log
+}
+
 #==============================================================================
 # %%%%% Personal settings: Git commands %%%%%
 #==============================================================================
