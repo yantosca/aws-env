@@ -24,8 +24,6 @@
 cp -f ~/aws-env/root/.Xdefaults    ~/.Xdefaults
 cp -f ~/aws-env/root/.emacs        ~/.emacs
 cp -f ~/aws-env/root/.bash_aliases ~/.bash_aliases
-
-# Apply the personal settings in .bash_aliases
-source ~/.bash_aliases
+cp -f ~/aws-env/root/.tmux.conf    ~/.tmux.conf
 
 #EOC

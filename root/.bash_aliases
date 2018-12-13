@@ -102,6 +102,7 @@ function rungchp() {
 # Tmux aliases
 alias tmuxnew="tmux new -s "
 alias tmuxat="tmux a -t "
+alias tmuxde="tmux detach "
 
 #==============================================================================
 # %%%%% Personal settings: Git commands %%%%%
