@@ -82,23 +82,20 @@ unset NC_NODEFLATE
 export NC_NODEFLATE=y
 
 # Call ncdump and pipe the result to less
-function ncd() {
-  /usr/bin/ncdump -cts $1 | less
-}
+function ncd() { /usr/bin/ncdump -cts $1 | less }
 
 # Convert a windows file to Unix
-function dos2unix() { 
-   awk '{ sub("\r$", ""); print }' $1 > $2
-}
+function dos2unix() { awk '{ sub("\r$", ""); print }' $1 > $2 }
 
 # GCHP convenience aliases
 alias mco="make cleanup_output"
 alias mcs="make compile_standard"
 alias run6="mpirun -np 6 ./geos > gchp.log 2>&1 &"
+function rungchp() { mpirun -np $1 ./geos | tee gchp.log }
 
-function rungchp() {
-  mpirun -np $1 ./geos | tee gchp.log
-}
+# Tmux aliases
+alias tmuxnew="tmux new -s "
+alias tmuxat="tmux a -t "
 
 #==============================================================================
 # %%%%% Personal settings: Git commands %%%%%

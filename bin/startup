@@ -1,0 +1,61 @@
+#!/bin/bash
+
+#------------------------------------------------------------------------------
+#          Harvard University Atmospheric Chemistry Modeling Group            !
+#------------------------------------------------------------------------------
+#BOP
+#
+# !MODULE: startup
+#
+# !DESCRIPTION: Shell script STARTUP launches applications at startup.  
+#  STARTUP is meant to be called from the main PuTTY login window on the
+#  AS cluster or Odyssey cluster.  This allows you to define a Windows
+#  firewall with X11 tunneling.
+#\\
+#\\
+# !CALLING SEQUENCE:
+#  startup 1         # Opens 1 xterm window  and an emacs editor
+#  startup 1 0       # Opens 2 xterm windows only (no emacs editor)
+#  startup 2         # Opens 2 xterm windows and an emacs editor
+#  startup 2 0       # Opens 2 xterm windows only (no emacs editor)
+#  ...
+#  startup           # Opens 4 xterm windows (default) and an emacs editor
+#
+# !REMARKS:
+#  You also need an .Xdefaults file with xterminal settings (i.e. colors,
+#  font sizes, cursor colors, etc.).  We have provided a sample .Xdefaults
+#  file in the env/root folder.
+#
+# !REVISION HISTORY: 
+#  01 Oct 2003 - R. Yantosca - Initial version for AWS
+#EOP
+#------------------------------------------------------------------------------
+#BOC
+
+# Number of xterm windows to open, specified by user (default = 4)
+if [ "$#" -eq 2 ]; then
+   N_TERMINALS=$1
+   DO_EMACS=$2
+elif [ "$#" -eq 1 ]; then
+   N_TERMINALS=$1
+   DO_EMACS=1
+else
+   N_TERMINALS=4
+   DO_EMACS=1    
+fi
+
+# Open connections to the number of specified Xterm windows
+for i in `seq 1 $N_TERMINALS`; do
+  xterm &
+done
+
+# Open an EMACS editor
+# NOTE: Make sure to load the emacs module, which currently has a properly-
+# functioning build of emacs.  The default version is broken. (bmy, 7/13/18)
+if [[ $DO_EMACS -eq 1 ]]; then
+  emacs &
+fi
+
+# Exit normally
+exit 0
+#EOC

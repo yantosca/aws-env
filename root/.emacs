@@ -530,6 +530,9 @@
 				("\\.tex$" . latex-mode)
 				("\\.mp$"  . fundamental-mode)
 				("\\.sp$"  . fundamental-mode)
+				("\\.sh"   . shell-script-mode)
+				("\\.env"  . shell-script-mode)
+				("\\.pl"   . perl-mode)
 				("\\.c$"   . c-mode))auto-mode-alist))
 
 ;; Link *.pro to IDLWAVE on EMACS or to the IDL mode on XEMACS
