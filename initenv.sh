@@ -21,9 +21,10 @@
 #BOC
 
 # Copy files
-cp -f ~/aws-env/root/.Xdefaults    ~/.Xdefaults
-cp -f ~/aws-env/root/.emacs        ~/.emacs
-cp -f ~/aws-env/root/.bash_aliases ~/.bash_aliases
-cp -f ~/aws-env/root/.tmux.conf    ~/.tmux.conf
+cp -f ~/aws-env/root/.Xdefaults    ~
+cp -f ~/aws-env/root/.emacs        ~
+cp -f ~/aws-env/root/.bash_aliases ~
+cp -f ~/aws-env/root/.tmux.conf    ~
+cp -f ~/aws-env/root/.gitconfig    ~
 
 #EOC
