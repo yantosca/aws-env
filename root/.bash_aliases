@@ -144,8 +144,7 @@ function gprune() {
 #==============================================================================
 
 # Jupyter notebook
-alias jup="jupyter notebook"
-alias jup_port="jupyter notebook --port 8899"
+alias jup="jupyter notebook --NotebookApp.token='' --no-browser --port=8999 --notebook-dir ~/"
 
 # Select Bob Y's custom environment
 alias sab="source activate bmy"
