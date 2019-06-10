@@ -154,4 +154,10 @@ export PATH=$PATH:/home/miniconda/bin:$PATH
 # Add Python repos to $PYTHONPATH
 #export PYTHONPATH=$PYTHONPATH:/home/python/gcpy
 
+#==============================================================================
+# %%%%% Personal settings: Amazon Web Services cloud computing %%%%%
+#==============================================================================
+alias s3copy="aws s3 cp --request-payer=requester "
+alias s3ls="aws s3 ls --request-payer=requester "
+
 #EOC
