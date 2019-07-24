@@ -1,3 +1,5 @@
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/yantosca/aws-env/blob/master/LICENSE.txt)
+
 # README for the aws-env repository
 
 This repository (https://github.com/yantosca/aws-env) contains several startup files for customizing your Unix login environment on the Amazon Web Services cloud computing environment
