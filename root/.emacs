@@ -1046,16 +1046,13 @@
 (setq perl-continued-statement-offset 2)
 
 ;;-----------------------------------------------------------------------------
-;; For NCL (NCAR Graphics) mode
+;; For CMAKE mode, get cmake-mode.el from:
+;;   https://github.com/Kitware/CMake/blob/master/Auxiliary/cmake-mode.el
+;; Add the path to your cmake-mode.el file next to expand-file-name
 ;;-----------------------------------------------------------------------------
+(setq load-path (cons (expand-file-name "~/bin") load-path))
+(require 'cmake-mode)
 
-; Associate *.ncl files with NCL
-(setq auto-mode-alist (cons '("\.ncl$" . ncl-mode) auto-mode-alist))
-
-; Load the file with NCL editor enhancements
-; Use the color settings defined above.
-(autoload 'ncl-mode "~/bin/ncl.el")  
-    
 ;;-----------------------------------------------------------------------------
 ;; For FONT-LOCK and AUTO-FILL
 ;;-----------------------------------------------------------------------------
@@ -1067,6 +1064,10 @@
     (global-font-lock-mode 1)          ; GNU Emacs
     (setq font-lock-auto-fontify t))   ; XEmacs
 
+;-----------------------------------------------------------------------------
+; Remove trailing white space before saving
+;-----------------------------------------------------------------------------
+(add-hook ’before-save-hook ’delete-trailing-whitespace)
 
 ;;=============================================================================
 ;; FOR EMACS ONLY! 
