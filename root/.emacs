@@ -10,11 +10,11 @@
 ;\\
 ;\\
 ; !REMARKS:
-;  Please peruse this file carefully!  For many settings there are several 
-;  options that you can pick from.  You can uncomment the settings that you 
-;  would like to use and comment out the ones that you don't.  
+;  Please peruse this file carefully!  For many settings there are several
+;  options that you can pick from.  You can uncomment the settings that you
+;  would like to use and comment out the ones that you don't.
 ;                                                                             .
-;  The comment character for this file is ";". 
+;  The comment character for this file is ";".
 ;  Logical switches are turned on with "t" and turned off with "nil".
 ;                                                                             .
 ;  Also be sure to set your default email address under "MISCELLANEOUS STUFF".
@@ -30,7 +30,7 @@
 ;  You can also decide if you want to stack windows horizontally or
 ;  vertically.
 ;
-; !REVISION HISTORY: 
+; !REVISION HISTORY:
 ;  Change directory to ~/env and type 'gitk' at the prompt to browse
 ;  revision history.
 ;EOP
@@ -42,27 +42,27 @@
 ;;=============================================================================
 
 ;; %%%%% NOTE: USE THIS FONT WITH MOBAXTERM (bmy, 5/25/18) %%%%%
-(set-face-font 
+(set-face-font
  'default "-*-DejaVuSansMono-Bold-R-*-*-*-120-*-*-*-*-iso8859-1" )
 
 ;; %%%%% NOTE: USE THIS FONT WITH PUTTY AND XTERM (bmy, 5/25/18 %%%%%
 ;; Lucida Typewriter 14pt bold
-;;(set-face-font 
+;;(set-face-font
 ;; 'default "-*-Lucidatypewriter-Bold-R-*-*-*-140-*-*-*-*-iso8859-1" )
 
-;; Example of normal instead of bold 
+;; Example of normal instead of bold
 ;; Lucida Typewriter 14pt normal
-;(set-face-font 
+;(set-face-font
 ; 'default "-*-Lucidatypewriter-*-R-*-*-*-140-*-*-*-*-iso8859-1" )
 
 ;; Example of different font size
 ;;Lucida Typewriter 13pt bold
-;(set-face-font 
+;(set-face-font
 ; 'default "-*-Lucidatypewriter-Bold-R-*-*-*-130-*-*-*-*-iso8859-1" )
 
 ;; Example of different font type
 ;; Courier 13 pt bold
-;(set-face-font 
+;(set-face-font
 ; 'default "-*-Courier-Bold-R-*-*-*-130-*-*-*-*-iso8859-1" )
 
 ;;=============================================================================
@@ -72,7 +72,7 @@
 ;; BACKGROUND COLOR
 (set-face-background 'default "gray75")            ; Bob's preference
 ;(set-face-background 'default "FloralWhite")      ; Philippe's preference
-;(set-face-background 'default "dark slate gray")  ; ... a 
+;(set-face-background 'default "dark slate gray")  ; ... a
 ;(set-face-foreground 'default "blanched almond")  ;     few
 ;(set-face-foreground 'default "black")            ;     other
 ;(set-face-foreground 'default "white")            ;     options ...
@@ -133,7 +133,7 @@
 (defalias 'swapbuffer
   (read-kbd-macro "C-x b RET"))
 
-;; EDIFF : to restore my 2 windows setting w/ each compared file in one window 
+;; EDIFF : to restore my 2 windows setting w/ each compared file in one window
 (defalias 'clean-after-ediff
   (read-kbd-macro "C-x 1 C-x 3 C-x b RET"))
 
@@ -155,13 +155,13 @@
 
 
 ;; So redefined the "omit" functions for Emacs in dired mode:
-(if (not(featurep 'xemacs)) 
+(if (not(featurep 'xemacs))
     (fset 'omitdotfiles
 	  [?% ?m ?^ ?\\ ?. ?. ?* return ?k])
   )
 
 ;; and this one will omit .o, .mod, ~, and . files from directory listing
-(if (not(featurep 'xemacs)) 
+(if (not(featurep 'xemacs))
     (fset 'omit-fortran
 	  [?% ?m ?^ ?\\ ?. ?\\ ?| ?\\ ?. ?o ?$ ?\\ ?| ?\\ ?. ?m ?o ?d ?$ ?\\ ?| ?~ ?$ return ?k])
   )
@@ -169,7 +169,7 @@
 ; -- some little tricks for F90 mode:
 
 ;; macro used in F90 mode. Since line starting with a ! in 1st col are
-;; not aligned with the code, this comment will do it. 
+;; not aligned with the code, this comment will do it.
 (fset 'smart-f90-tab
    [home ?  tab end])
 
@@ -190,11 +190,11 @@
 ;;
 ;; so, like in Windows:
 ;;=============================================================================
-(global-set-key [(delete)] "\C-d")        ; Now do that instead: 
+(global-set-key [(delete)] "\C-d")        ; Now do that instead:
                                           ;  works for both emacs/Xemacs
 (global-set-key [(control delete)]    'kill-word)
 (global-set-key [(control backspace)] 'backward-kill-word)
-;; to replaces (when typing) or delete (when pressing DEL 
+;; to replaces (when typing) or delete (when pressing DEL
 ;; or Backspace) **highlighted** text (very  useful!)
 (delete-selection-mode t)
 
@@ -227,16 +227,16 @@
 ;(global-set-key [(meta up)] 'scroll-n-lines-behind)
 
 
-;; To scroll only one line when cursor is at the bottom of the screen 
+;; To scroll only one line when cursor is at the bottom of the screen
 ;; (instead of finding the lastline suddenly in the middle)
-;; (I use it in conjonction with C-l to get the cursor at the middle of 
+;; (I use it in conjonction with C-l to get the cursor at the middle of
 ;;  the screen if this is what I really want)
 (setq scroll-step 1)
 
 
 ;; ---------- GO TO OTHER WINDOW
 ;; The following binding is needed for Emacs, but was automatic in Xemacs.
-(if (not(featurep 'xemacs)) 
+(if (not(featurep 'xemacs))
     (progn
       (global-set-key [(control tab)] 'other-window)
       ))
@@ -258,7 +258,7 @@
 
 
 ;; ---------- ACCELERATORS
-;; to get 10 lines at a time down/up. Something b/w one line and one page 
+;; to get 10 lines at a time down/up. Something b/w one line and one page
 ;; at a time...
 
 ;; classic keyboard
@@ -273,9 +273,9 @@
 ;; MISCELLANEOUS STUFF
 ;;=============================================================================
 
-;; To scroll only one line when cursor is at the bottom of the screen 
+;; To scroll only one line when cursor is at the bottom of the screen
 ;; (instead of finding the lastline suddenly in the middle)
-;; (I use it in conjonction with C-l to get the cursor at the middle of 
+;; (I use it in conjonction with C-l to get the cursor at the middle of
 ;;  the screen if this is what I really want)
 (setq scroll-step 1)
 
@@ -306,23 +306,23 @@
   (interactive)
   (insert (format-time-string "!  %e %b %Y - R. Yantosca - ")))
 
-;; no splash screen at start 
+;; no splash screen at start
 (setq inhibit-splash-screen t)   ;; not working w/ 21.4
 (setq inhibit-startup-message t) ;; working w/ 21.4
 
-;; C-k kills line and end of line 
+;; C-k kills line and end of line
 (setq kill-whole-line t)
 
-;; Enable multiple minibuffers.  If you don't do this, then you 
+;; Enable multiple minibuffers.  If you don't do this, then you
 ;; can't do things like search the minibuffer history with M-s.
 (setq minibuffer-max-depth nil)
 
-;; to answer Y/ N instead of YES/NO RET when asked for confirmation 
+;; to answer Y/ N instead of YES/NO RET when asked for confirmation
 ;; NOTE: not for newbies!
 (defalias 'yes-or-no-p 'y-or-n-p)
 
 ;; Put vertical scroll bar on the left (bmy, 5/30/17)
-(set-scroll-bar-mode 'left)  
+(set-scroll-bar-mode 'left)
 
 ;; change default Ediff splitting to horizontal
 ;;(setq ediff-split-window-function 'split-window-horizontally)
@@ -369,7 +369,7 @@
 ;;=============================================================================
 
 ;; Use this for EMACS 21 (bmy, 6/5/12)
-;;(if (featurep 'xemacs) 
+;;(if (featurep 'xemacs)
 ;;    (progn
 ;;      (global-set-key '(button4) 'scroll-down)
 ;;      (global-set-key '(button5) 'scroll-up))
@@ -379,7 +379,7 @@
 ;;  )
 
 ;; Use this for EMACS 23 or higher; scroll by 3 lines at a time (bmy, 6/5/12)
-(setq mouse-wheel-scroll-amount '(3 ((shift) . 3) ((control) . nil))) 
+(setq mouse-wheel-scroll-amount '(3 ((shift) . 3) ((control) . nil)))
 (setq mouse-wheel-progressive-speed nil)
 
 ;;=============================================================================
@@ -397,7 +397,7 @@
 ;; %%% these key bindings.  Redefine these for the time being. (bmy, 6/14/18)
 ;;(global-set-key [kp-add]         "\M-l")               ; Lowercase
 ;;(global-set-key [kp-enter]       "\M-u")               ; Uppercase
-;;(global-set-key [kp-subtract]    'goto-line)   
+;;(global-set-key [kp-subtract]    'goto-line)
 ;;-----------------------------------------------------------------------------
 ;; Use these settings for emacs/26.1-fasrc01 (bmy, 7/13/18)
 (global-set-key (kbd "<S-pause>")  "\M-l")           ; Lowercase
@@ -408,9 +408,9 @@
 (global-set-key [f6]             'find-file)
 (global-set-key [(shift f6)]     'insert-file)
 (global-set-key [f7]             'save-buffer)
-(global-set-key [f8]             'isearch-forward)     
+(global-set-key [f8]             'isearch-forward)
 (global-set-key [f9]             'replace-string)
-(global-set-key [(shift f9)]     'query-replace)       
+(global-set-key [(shift f9)]     'query-replace)
 
 ; Buffers
 (global-set-key [f10]            'swapbuffer)
@@ -439,18 +439,18 @@
 ;;=============================================================================
 
 ;(global-set-key [f1]             'help)
-;(global-set-key [f2]             'ediff-buffers)      ; I love it so much! 
+;(global-set-key [f2]             'ediff-buffers)      ; I love it so much!
 ;(global-set-key [(control f2)]   'clean-after-ediff)  ;
 ;(global-set-key [(meta f2)]      'fullcleanediff)
 ;(global-set-key [f3]             'kill-this-buffer)
 ;(global-set-key [(control f3)]   'delete-window)
-;(global-set-key [f4]          	 'quitnclean)         ; see definition above 
+;(global-set-key [f4]          	 'quitnclean)         ; see definition above
 ;                                                     ; (work in shell mode only)
-;(global-set-key [(meta f4)]  	 "\C-x\C-c")          ; quit 
-;                                                     ; (seems to not work if 
+;(global-set-key [(meta f4)]  	 "\C-x\C-c")          ; quit
+;                                                     ; (seems to not work if
 ;                                                     ;  a shell is active)
 ;(global-set-key [f5]          	 'shell)
-;(global-set-key [f6]         	 'swapbuffer)         ; see definition above 
+;(global-set-key [f6]         	 'swapbuffer)         ; see definition above
 ;                                                     ; (same as "F7 RET")
 ;(global-set-key [f7]          	 'switch-to-buffer)
 ;(global-set-key [f8]         	 'font-lock-mode)
@@ -462,7 +462,7 @@
 ;(global-set-key [(shift f10)]    'goto-line)
 ;
 ;(global-set-key [f11]        	 'find-file)
-;(global-set-key [(shift f11)]	 "\C-x\C-b")          ; buffer list in 
+;(global-set-key [(shift f11)]	 "\C-x\C-b")          ; buffer list in
 ;                                                      ; other window
 ;(global-set-key [(control f11)]  'find-file-other-window)
 ;
@@ -490,11 +490,11 @@
 
 
 ;;=============================================================================
-;; MODES 
+;; MODES
 ;;=============================================================================
 
 ;; activate image mode to display images in emacs buffer (jpg, gif, tiff, ...)
-;; Alternatively, you can use ! command, where command is DISPLAY, GV 
+;; Alternatively, you can use ! command, where command is DISPLAY, GV
 (auto-image-file-mode)
 
 ;; Add path where IDLWAVE v6 is located, so that we will load that.
@@ -536,7 +536,7 @@
 				("\\.c$"   . c-mode))auto-mode-alist))
 
 ;; Link *.pro to IDLWAVE on EMACS or to the IDL mode on XEMACS
-(if (featurep 'xemacs)    
+(if (featurep 'xemacs)
   (setq auto-mode-alist (append '(("\\.pro$" . idl-mode))auto-mode-alist))
   (setq auto-mode-alist (append '(("\\.pro$" . idlwave-mode))auto-mode-alist)))
 
@@ -545,16 +545,16 @@
 ;; Add the following for IDL mode (for XEMACS where we don't have IDLWAVE)
 ;;-----------------------------------------------------------------------------
 (add-hook 'idl-mode-hook
-  (function 
+  (function
     (lambda ()
       (setq                           ; Set options here
 	idl-block-indent         3    ; Indentation settings
 	idl-main-block-indent    3
 	idl-end-offset          -3
 	idl-continuation-indent  3
-	
+
 	;; Leave ";" but not ";;" anchored at start of line.
-	idl-begin-line-comment   "^\;[^\;]" 
+	idl-begin-line-comment   "^\;[^\;]"
 
 	idl-surround-by-blank    t    ; Turn on padding symbols =,<,>, etc.
 	abbrev-mode              1    ; Turn on abbrevs (-1 for off)
@@ -569,12 +569,12 @@
 	idl-abbrev-move          t    ; Allow abbrevs to move point backwards
 	case-fold-search         nil  ; Make searches case sensitive
       )
-       
+
       ;; Run other functions here
       (font-lock-mode 1)           ; font-lock mode
       (idl-auto-fill-mode 0)       ; Turn off auto filling
 
-      ;; Pad with with 1 space (if -n is used then make the 
+      ;; Pad with with 1 space (if -n is used then make the
       ;; padding a minimum of n spaces.)  The defaults use -1
       ;; instead of 1.
       (idl-action-and-binding "=" '(idl-expand-equal 1 1))
@@ -596,7 +596,6 @@
     )
   )
 )
-
 
 ;;-----------------------------------------------------------------------------
 ;; Add the following for IDLWAVE (for EMACS only)
@@ -623,7 +622,7 @@
 
 	      ;; Turn off auto filling
 	      (idlwave-auto-fill-mode 0)
-		 
+
 	      ;; Some personal abbreviations
 	      (idlwave-define-abbrev "dpf" "dialog_pickfile()"
 	      (idlwave-keyword-abbrev 1))
@@ -631,7 +630,7 @@
 		 ;; Pad '*' and '+'
 	      (idlwave-action-and-binding "*" '(idlwave-surround 1 1))
 	      (idlwave-action-and-binding "+" '(idlwave-surround 1 1))
-	      
+
 	      ))
 
 
@@ -645,7 +644,7 @@
       ;; Where are the online help files? -NEED CHECKING
       (setq idlwave-help-directory "~/.idlwave")
 
-      ;; Pop open the IDL command line shell in a separate EMACS window 
+      ;; Pop open the IDL command line shell in a separate EMACS window
       (setq idlwave-shell-use-dedicated-frame t)
 
       ;; Hack since help is temporarily missing in IDL7 (not working yet..)
@@ -659,13 +658,13 @@
          ;; Since M-Tab is used by Windows, Linux .. and we want to keep
          ;; that feature, we need amother binding to 'idlwave-complete
          ;; (which we really want to use).  Could use ESC-p but I prefer
-         ;; to use M-p and F4 since they are available locally. This is NOT 
+         ;; to use M-p and F4 since they are available locally. This is NOT
 	 ;; for idl-shell mode, where you simply use TAB to get completion
 	 (define-key idlwave-mode-map [?\M-p] 'idlwave-complete)
 	 (define-key idlwave-mode-map [f4] 'idlwave-complete)
 
-         ;; Bind most useful help functions to S-F1 (for M-?) and 
-         ;; M-F1 (for C-c ?), in both modes, first file buffer...  
+         ;; Bind most useful help functions to S-F1 (for M-?) and
+         ;; M-F1 (for C-c ?), in both modes, first file buffer...
 	 (define-key idlwave-mode-map  [(meta f1)]   'idlwave-routine-info)
 	 (define-key idlwave-mode-map  [(shift f1)]  'idlwave-context-help)
 
@@ -676,15 +675,14 @@
 	       (local-set-key [(shift f1)]  'idlwave-context-help)))
 ))
 
-
 ;;-----------------------------------------------------------------------------
 ;; Add the following for FORTRAN MODE
 ;;
 ;; NOTE: For Emacs 24.4 and higher!!! (Bob Yantosca, 11 Dec 2015)
 ;; ===========================================================================
 ;; Turn off the "electric-indent-mode if it supported in this Emacs version.
-;; This feature was introduced in Emacs 24.  When typing multiple comment 
-;; lines (esp. in Fortran mode), electric-indent would align each new comment 
+;; This feature was introduced in Emacs 24.  When typing multiple comment
+;; lines (esp. in Fortran mode), electric-indent would align each new comment
 ;; line to column 0 instead of at the previous indent level.  This meant that
 ;; you would have had to manually indent comments by typing spaces.
 ;;
@@ -695,7 +693,7 @@
 ;; The default indentation behavior for Fortran mode was changed in Emacs 24.
 ;; Fortran-90 mode is unaffected.  Therefore, we turn off the electric-indent
 ;; mode only if we are in Fortran mode.
-;; 
+;;
 ;; See this web post for more information: http://emacs.stackexchange.com/questions/5939/how-to-disable-auto-indentation-of-new-lines
 ;;-----------------------------------------------------------------------------
 
@@ -710,164 +708,9 @@
              ; Turn off automatic indentation for Fortran mode only
              (when (fboundp 'electric-indent-mode) (electric-indent-mode -1))
 	     )))
-	      
+
 ;; Make sure we have F90 mode loaded
 (require 'fortran)
-
-;;
-;; %%% ABBREVIATIONS %%% 
-;; When inside a F77 file, type: ;? to see the already defined abbreviations.
-;;
-;; %%% General FORTRAN abbreviations (IF blocks and DO loops) %%%
-;;
-(define-abbrev fortran-mode-abbrev-table ";ife" ""  'fortran-skeleton-if-else-endif)
-(define-abbrev fortran-mode-abbrev-table ";do"  ""  'fortran-skeleton-do-enddo)
-(define-abbrev fortran-mode-abbrev-table ";do2" ""  'fortran-skeleton-do-enddo-2)
-(define-abbrev fortran-mode-abbrev-table ";do3" ""  'fortran-skeleton-do-enddo-3)
-(define-abbrev fortran-mode-abbrev-table ";do4" ""  'fortran-skeleton-do-enddo-4)
-(define-abbrev fortran-mode-abbrev-table ";ar"  ""  'fortran-skeleton-am-I-Root)
-
-(define-skeleton fortran-skeleton-if-else-endif
-  "Insert an if - else - end if region" nil
-  >  "IF (" _ ") THEN" \n
-  -3 "ELSE" \n
-  -3 "ENDIF")
-
-(define-skeleton fortran-skeleton-do-enddo
-  "Insert an do - enddo region (1 loop)" nil
-  >  "DO I = x, y" \n
-  -3 "ENDDO")
-
-(define-skeleton fortran-skeleton-do-enddo-2
-  "Insert an do - enddo region (2 loops)" nil
-  >  "DO J = x, y" \n
-  -3 "DO I = x, y" \n
-  -3 "ENDDO" \n
-  -3 "ENDDO")
-
-(define-skeleton fortran-skeleton-do-enddo-3
-  "Insert an do - enddo region (3 loops)" nil
-  >  "DO L = x, y" \n
-  -3 "DO J = x, y" \n
-  -3 "DO I = x, y" \n
-  -3 "ENDDO" \n
-  -3 "ENDDO" \n
-  -3 "ENDDO")
-
-(define-skeleton fortran-skeleton-do-enddo-4
-  "Insert an do - enddo region (4 loops)" nil
-  >  "DO N = x, y" \n
-  -3 "DO L = x, y" \n
-  -3 "DO J = x, y" \n
-  -3 "DO I = x, y" \n
-  -3 "ENDDO" \n
-  -3 "ENDDO" \n
-  -3 "ENDDO" \n
-  -3 "ENDDO")
-
-(define-skeleton fortran-skeleton-am-I-Root
-  "Insert an if - else - end if region" nil
-  >  "IF ( am_I_Root ) THEN" \n
-  -3 "ENDIF")
-
-;;
-;; %%% FORTRAN data type abbreviations %%%
-;;
-(define-abbrev fortran-mode-abbrev-table ";ii"   ""  'fortran-intent-in)
-(define-abbrev fortran-mode-abbrev-table ";io"   ""  'fortran-intent-out)
-(define-abbrev fortran-mode-abbrev-table ";iio"  ""  'fortran-intent-inout)
-(define-abbrev fortran-mode-abbrev-table ";i4"   ""  'fortran-type-integer4)
-(define-abbrev fortran-mode-abbrev-table ";r4"   ""  'fortran-type-real4)
-(define-abbrev fortran-mode-abbrev-table ";r8"   ""  'fortran-type-real8)
-(define-abbrev fortran-mode-abbrev-table ";ch"   ""  'fortran-type-character)
-
-(define-skeleton fortran-intent-in
-  "Insert an INTENT(IN) template" nil
-  > "INTENT(IN) ")
-
-(define-skeleton fortran-intent-out
-  "Insert an INTENT(OUT) template" nil
-  > "INTENT(OUT) ")
-
-(define-skeleton fortran-intent-inout
-  "Insert an INTENT(INOUT) template" nil
-  > "INTENT(INOUT) ")
-
-(define-skeleton fortran-type-integer4
-  "Insert an INTEGER*4 template" nil
-  > "INTEGER :: ")
-
-(define-skeleton fortran-type-real4
-  "Insert an REAL*4 template" nil
-  > "REAL*4 :: ")
-
-(define-skeleton fortran-type-real8
-  "Insert an REAL*8 template" nil
-  > "REAL*8 :: ")
-
-(define-skeleton fortran-type-character
-  "Insert a CHARACTER template" nil
-  > "CHARACTER(LEN=255) :: ")
-
-;;
-;; %%% ProTex header abbreviations %%%
-;;
-(define-abbrev fortran-mode-abbrev-table ";pi"   ""  'fortran-protex-italic)
-(define-abbrev fortran-mode-abbrev-table ";pb"   ""  'fortran-protex-bold)
-(define-abbrev fortran-mode-abbrev-table ";pu"   ""  'fortran-protex-underline)
-(define-abbrev fortran-mode-abbrev-table ";pel"  ""  'fortran-protex-enumerated-list)
-(define-abbrev fortran-mode-abbrev-table ";pil"  ""  'fortran-protex-itemized-list)
-(define-abbrev fortran-mode-abbrev-table ";pdl"  ""  'fortran-protex-description-list)
-(define-abbrev fortran-mode-abbrev-table ";plb"  ""  'fortran-protex-line-break)
-
-(define-skeleton fortran-protex-italic
-  "Italic command for ProTeX header" nil
-  > "\\emph{}")
-
-(define-skeleton fortran-protex-bold
-  "Underline command for ProTeX header" nil
-  > "\\textbf{}")
-
-(define-skeleton fortran-protex-underline
-  "Underline command for ProTeX header" nil
-  > "\\underline{}")
-
-(define-skeleton fortran-protex-enumerated-list
-  "Enumerated list for ProTeX header" nil
-  > "! \\begin\{enumerate}"\n
-  > "! \\item"\n
-  > "! \\end\{enumerate}")
-
-(define-skeleton fortran-protex-itemized-list
-  "Itemized list for ProTeX header" nil
-  > "! \\begin\{itemize}"\n
-  > "! \\item"\n
-  > "! \\end\{itemize}")
-
-(define-skeleton fortran-protex-description-list
-  "Description list for ProTeX header" nil
-  > "! \\begin\{description}"\n
-  > "! \\item[]"\n
-  > "! \\end\{description}")
-
-(define-skeleton fortran-protex-line-break
-  "Line break for ProTeX header" nil
-  > "! \\\\"\n
-  > "! \\\\")
-
-;;
-;; %%% Various comments %%%
-;;
-(define-abbrev fortran-mode-abbrev-table ";b"   ""  'fortran-comment-1)
-(define-abbrev fortran-mode-abbrev-table ";d"   ""  'fortran-comment-2)
-
-(define-skeleton fortran-comment-1
-  "Comment style 1" nil
-  > "!###")
-
-(define-skeleton fortran-comment-2
-  "Comment style 2" nil
-  > "!%%%")
 
 ;;-----------------------------------------------------------------------------
 ;; Add the following for FORTRAN 90 MODE
@@ -876,9 +719,9 @@
 	  (function
 	   (lambda ()
 
-	     ;; use abbreviations (e.g.: "`pr" for "print")	     
+	     ;; use abbreviations (e.g.: "`pr" for "print")
 	     (setq  abbrev-mode 1)
-	     
+
              ; Turn off automatic indentation for Fortran mode only
              (when (fboundp 'electric-indent-mode) (electric-indent-mode -1))
 
@@ -887,130 +730,24 @@
 ;; Make sure we have F90 mode loaded
 (require 'f90)
 
-;;
-;; %%% ABBREVIATIONS %%% 
-;; When inside a F90 file, type: `? to see the already defined abbreviations.
-;;
-;; %%% General F90 abbreviations (IF blocks and DO loops) %%%
-;;
-(define-abbrev f90-mode-abbrev-table "`ife" "" 'f90-skeleton-if-else-endif)
-(define-abbrev f90-mode-abbrev-table "`do"  ""  'f90-skeleton-do-enddo)
-(define-abbrev f90-mode-abbrev-table "`do2" ""  'f90-skeleton-do-enddo-2)
-(define-abbrev f90-mode-abbrev-table "`do3" ""  'f90-skeleton-do-enddo-3)
-(define-abbrev f90-mode-abbrev-table "`do4" ""  'f90-skeleton-do-enddo-4)
-(define-abbrev f90-mode-abbrev-table "`ar"  ""  'f90-skeleton-am-I-Root)
-
-(define-skeleton f90-skeleton-if-else-endif
-  "Insert an if - else - end if region" nil
-  >  "IF (" _ ") THEN" \n
-  -3 "ELSE" \n
-  -3 "ENDIF")
-
-(define-skeleton f90-skeleton-do-enddo
-  "Insert an do - enddo region (1 loop)" nil
-  >  "DO I = x, y" \n
-  -3 "ENDDO")
-
-(define-skeleton f90-skeleton-do-enddo-2
-  "Insert an do - enddo region (2 loops)" nil
-  >  "DO J = x, y" \n
-  -3 "DO I = x, y" \n
-  -3 "ENDDO" \n
-  -3 "ENDDO")
-
-(define-skeleton f90-skeleton-do-enddo-3
-  "Insert an do - enddo region (3 loops)" nil
-  >  "DO L = x, y" \n
-  -3 "DO J = x, y" \n
-  -3 "DO I = x, y" \n
-  -3 "ENDDO" \n
-  -3 "ENDDO" \n
-  -3 "ENDDO")
-
-(define-skeleton f90-skeleton-do-enddo-4
-  "Insert an do - enddo region (4 loops)" nil
-  >  "DO N = x, y" \n
-  -3 "DO L = x, y" \n
-  -3 "DO J = x, y" \n
-  -3 "DO I = x, y" \n
-  -3 "ENDDO" \n
-  -3 "ENDDO" \n
-  -3 "ENDDO" \n
-  -3 "ENDDO")
-
-(define-skeleton f90-skeleton-am-I-Root
-  "Insert an if - else - end if region" nil
-  >  "IF ( am_I_Root ) THEN" \n
-  -3 "ENDIF")
-
-;;
-;; %%% ProTex header abbreviations %%%
-;;
-(define-abbrev f90-mode-abbrev-table "`pi"   ""  'f90-protex-italic)
-(define-abbrev f90-mode-abbrev-table "`pb"   ""  'f90-protex-bold)
-(define-abbrev f90-mode-abbrev-table "`pu"   ""  'f90-protex-underline)
-(define-abbrev f90-mode-abbrev-table "`pel"  ""  'f90-protex-enumerated-list)
-(define-abbrev f90-mode-abbrev-table "`pil"  ""  'f90-protex-itemized-list)
-(define-abbrev f90-mode-abbrev-table "`pdl"  ""  'f90-protex-description-list)
-(define-abbrev f90-mode-abbrev-table "`plb"  ""  'f90-protex-line-break)
-
-(define-skeleton f90-protex-italic
-  "Italic command for ProTeX header" nil
-  > "\\emph{}")
-
-(define-skeleton f90-protex-bold
-  "Underline command for ProTeX header" nil
-  > "\\textbf{}")
-
-(define-skeleton f90-protex-underline
-  "Underline command for ProTeX header" nil
-  > "\\underline{}")
-
-(define-skeleton f90-protex-enumerated-list
-  "Enumerated list for ProTeX header" nil
-  > "! \\begin{enumerate}" \n
-  > "! \\item" \n
-  > "! \\end{enumerate}")
-
-(define-skeleton f90-protex-itemized-list
-  "Enumerated list for ProTeX header" nil
-  > "! \\begin\{itemize}"\n
-  > "! \\item"\n
-  > "! \\end\{itemize}")
-
-(define-skeleton f90-protex-description-list
-  "Description list for ProTeX header" nil
-  > "! \\begin\{description}"\n
-  > "! \\item[]" \n
-  > "! \\end\{description}")
-
-(define-skeleton f90-protex-line-break
-  "Line break for ProTeX header" nil
-  > "! \\\\" \n
-  > "! \\\\")
-
-;; Don't start code on the next line after a skeleton abbrev
-(setq skeleton-end-hook nil)
-
-
 ;;-----------------------------------------------------------------------------
 ;; Add the following for SHELL SCRIPT MODE
 ;;-----------------------------------------------------------------------------
 
 (add-hook 'shell-mode-hook
 	  '(lambda ()
-             (local-set-key [home]        ; move to beginning of line, 
-                                          ; after prompt  
+             (local-set-key [home]        ; move to beginning of line,
+                                          ; after prompt
                             'comint-bol)
 
-	     (local-set-key [up]          ; cycle backward through 
+	     (local-set-key [up]          ; cycle backward through
                                           ; command history
                             '(lambda () (interactive)
                                (if (comint-after-pmark-p)
                                    (comint-previous-input 1)
                                  (previous-line 1))))
 
-	     (local-set-key [down]        ; cycle forward through 
+	     (local-set-key [down]        ; cycle forward through
                                           ; command history
                             '(lambda () (interactive)
                                (if (comint-after-pmark-p)
@@ -1024,7 +761,7 @@
 ;;-----------------------------------------------------------------------------
 
 ; auto-formatting in text-mode
-(add-hook 'text-mode-hook 'turn-on-auto-fill)  
+(add-hook 'text-mode-hook 'turn-on-auto-fill)
 
 ;;-----------------------------------------------------------------------------
 ;; For PERL mode
@@ -1067,20 +804,20 @@
 ;-----------------------------------------------------------------------------
 ; Remove trailing white space before saving
 ;-----------------------------------------------------------------------------
-(add-hook ’before-save-hook ’delete-trailing-whitespace)
+;;(add-hook 'before-save-hook 'delete-trailing-whitespace)
 
 ;;=============================================================================
-;; FOR EMACS ONLY! 
+;; FOR EMACS ONLY!
 ;;
 ;; The following three commands are needed for Emacs as opposed to XEMACS.
 ;; The first one is automatic in Xemacs for some reason.
 ;; The second one and most of the third one were binded to C-o
 ;;=============================================================================
 
-(if (not(featurep 'xemacs)) 
+(if (not(featurep 'xemacs))
   (progn
-     
-    ;; to put cursor in the next window 
+
+    ;; to put cursor in the next window
     (global-set-key [(control tab)] 'other-window)
 
     ;; to omit the dot files in a directory, C-c o :
@@ -1088,14 +825,13 @@
 
     ;; to omit the .mod, .o, ~, and dot files in a directory, M-o:
     (global-set-key [?\M-o] 'omit-fortran)
-  ) 
+  )
 )
 
-
 ;;=============================================================================
-;; FOR XEMACS ONLY! 
+;; FOR XEMACS ONLY!
 ;;
-;; For backwards compatibility with the existing XEMACS on SGI, we will 
+;; For backwards compatibility with the existing XEMACS on SGI, we will
 ;; continue to load the default .xemacs-options file as before.  This will
 ;; re-define some of the font & color settings defined above.
 ;;
@@ -1116,7 +852,7 @@
 ;;=============================================================================
 ;; To save desktop, i.e., re-open the same files as when exiting.
 ;; Load the desktop library to do so.  For this to work, you must type
-;; M-x desktop-save during the session.  This also needs to be done *after* 
+;; M-x desktop-save during the session.  This also needs to be done *after*
 ;; all modes are loaded -like here-, if you want the "colorization" of code
 ;; to work.
 ;;=============================================================================
@@ -1133,7 +869,7 @@
 ;;=============================================================================
 
 ;; %%%%% Open one window, 80 columns x 60 lines, centered on screen %%%%%
-;;(set-frame-height (selected-frame) 72)    ; 72 lines 
+;;(set-frame-height (selected-frame) 72)    ; 72 lines
 ;;(set-frame-width  (selected-frame) 81)    ; 80 columns
 ;;(set-frame-position (selected-frame) 550 30)
 
@@ -1145,14 +881,15 @@
 ;;(other-window 1)                            ; Start in the right window
 
 ;; %%%%% Open two windows on top of each other, 80 columns x 72 lines %%%%%
-;;(set-frame-height (selected-frame) 72)    ; 72 lines 
+;;(set-frame-height (selected-frame) 72)    ; 72 lines
 ;;(set-frame-width  (selected-frame) 80)    ; 80 columns
 ;;(split-window-vertically)                 ; Use two horizontal windows
 ;;(other-window 1)                          ; Start in the bottom window
 
 ;; %%%%% Open a shell (optional, but not really necessary) %%%%%
-;(shell)                                    ; start a shell 
+;(shell)                                    ; start a shell
 ;;(rename-buffer "shell-first")             ; rename it
-;(other-window 1)                           ; move back to first window 
+;(other-window 1)                           ; move back to first window
 
 ;EOC
+emace

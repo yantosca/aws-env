@@ -36,7 +36,7 @@ export GREP_COLOR=32
 export LS_COLORS='no=00:fi=00:di=01;33:ln=01;36:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:su=37;41:sg=30;43:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;37:*.tgz=01;37:*.arj=01;37:*.taz=01;37:*.lzh=01;37:*.zip=01;37:*.z=01;37:*.Z=01;37:*.gz=01;37:*.bz2=01;37:*.deb=01;37:*.rpm=01;37:*.jar=01;37:*.jpg=01;35:*.jpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.avi=01;35:*.fli=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.flac=01;35:*.mp3=01;35:*.mpc=01;35:*.ogg=01;35:*.wav=01;35:'
 
 #==============================================================================
-# %%%%% Personal settings: Basic Unix commands %%%%%
+# %%%%% Personal settings: Unix commands %%%%%
 #==============================================================================
 
 # General Unix commands
@@ -76,14 +76,14 @@ alias llh="ls -lh"
 alias ncpl="~/aws-env/bin/nc_chunk.pl"
 alias isco="~/aws-env/bin/isCoards"
 
-# Bob Y's testing: don't turn on netCDF compression, which helps to
-# keep file sizes the same, so that they can be diffed in debugging
-unset NC_NODEFLATE
-export NC_NODEFLATE=y
+# Tmux aliases
+alias tmuxnew="tmux new -s "
+alias tmuxat="tmux a -t "
+alias tmuxde="tmux detach "
 
 # Call ncdump and pipe the result to less
 function ncd() {
-  /usr/bin/ncdump -cts $1 | less
+  ncdump -cts $1 | less
 }
 
 # Convert a windows file to Unix
@@ -91,21 +91,44 @@ function dos2unix() {
   awk '{ sub("\r$", ""); print }' $1 > $2
 }
 
-# GCHP convenience aliases
-alias mco="make cleanup_output"
-alias mcs="make compile_standard"
-alias run6="mpirun -np 6 ./geos > gchp.log 2>&1 &"
-function rungchp() {
-  mpirun -np $1 ./geos | tee gchp.log
+#==============================================================================
+# %%%%% Personal settings: Compiling and running GEOS-Chem %%%%%
+#==============================================================================
+
+# Run Cmake in the specified subdirectory
+function cm() {
+   cmake -S CodeDir -B $1
 }
 
-# Tmux aliases
-alias tmuxnew="tmux new -s "
-alias tmuxat="tmux a -t "
-alias tmuxde="tmux detach "
+# Compile the code in the specified subdirctory w/ CMake Makefiles
+function m6() {
+   if [[ -d $1 ]]; then
+     make -C $1 -j6 install
+   fi
+}
+
+# Run "cm" and "m6" on the gcbuild subdirectory
+alias cf="cm gcbuild"
+alias bu="m6 gcbuild"
+alias cfd="cm gcdebug -DCMAKE_BUILD_TYPE=Debug"
+alias bud="m6 gcdebug"
+
+# Bob Y's testing: don't turn on netCDF compression, which helps to
+# keep file sizes the same, so that they can be diffed in debugging
+unset NC_NODEFLATE
+export NC_NODEFLATE=y
+
+# Make sure that the stacksize memory is maxed out for OpenMP
+export OMP_STACKSIZE=500m
+
+# Manually set the number of OpenMP threads
+function set_omp() {
+  export OMP_NUM_THREADS=$1
+  echo "Number of OpenMP threads: $OMP_NUM_THREADS"
+}
 
 #==============================================================================
-# %%%%% Personal settings: Git commands %%%%%
+# %%%%% Personal settings: Git %%%%%
 #==============================================================================
 
 # Basic Git commands
@@ -115,9 +138,11 @@ alias gka="gitk --all &"
 alias gpo="git pull origin"
 alias gl="git log"
 alias glo="git log --oneline"
-alias glp="git log --pretty=format:'%h : %s' --topo-order --graph"
-alias getenv="cd ~/env; git pull origin master"
+alias glp="git log --pretty=foRmat:'%h : %s' --topo-order --graph"
 alias update_tags="git tag -l | xargs git tag -d && git fetch -t"
+
+# Alias to tell Git to run commands in the CodeDir folder
+alias gitc="git -C CodeDir"
 
 # Update the aws-env repository
 alias getenv="cd ~/aws-env; git pull origin master"
@@ -126,7 +151,11 @@ alias getenv="cd ~/aws-env; git pull origin master"
 alias clone_gc="git clone git@github.com:geoschem/geos-chem.git"
 alias clone_gchp="git clone git@github.com:geoschem/gchp.git"
 alias clone_ut="git clone git@github.com:geoschem/geos-chem-unittest.git"
-alias clone_nc="git clone git@github.com:geoschem/ncdfutil.git"
+
+# Set a branch to follow a remote branch
+function gbup() {
+  git branch --set-upstream-to=origin/${1} ${1}
+}
 
 # Remove a remote branch
 function gbrd() {
@@ -147,12 +176,17 @@ function gprune() {
 alias jup="jupyter notebook --NotebookApp.token='' --no-browser --port=8999 --notebook-dir ~/"
 
 # Select Bob Y's custom environment
-alias sab="source activate bmy"
+alias sag="source activate geo"
 alias sdb="source deactivate"
 export PATH=$PATH:/home/miniconda/bin:$PATH
 
 # Add Python repos to $PYTHONPATH
 #export PYTHONPATH=$PYTHONPATH:/home/python/gcpy
+
+#==============================================================================
+# %%%%% Logins to other machines %%%%%
+#==============================================================================
+alias gcfas="$HOME/bin/xt -h fas.harvard.edu -u geoschem &"
 
 #==============================================================================
 # %%%%% Personal settings: Amazon Web Services cloud computing %%%%%
