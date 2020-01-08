@@ -32,11 +32,18 @@ The table below lists all of the files contained in the aws-env repository:
 |File|Description|
 |---|---|
 |`.bash_aliases` |Contains your own custom aliases and settings for your Unix login environment.  This will be sourced from the AWS .bashrc file whenever you type "source ~/.bashrc".|
+|`.bashrc-ubuntu` |Sample .bashrc file for Ubuntu.  For reference only.|
 |`.emacs`|Customization file for the Emacs editor.  Sets the fonts, colors, background, and window sizes.|
 |`.gitconfig`|Git configuration file.  Specifies the default font that will be used in the Git GUI and GitK browsers.  Also allows you to define the name and email that you wish to use in commit messages. __MUST EDIT!__
 |`.gitignore`|Specifies files in `root/'' that should not be added to the Git repository.|
 |`.tmux.conf`|Configuration file for the tmux multiplexer application.|
 |`.Xdefaults`|Customization file for X-terminal windows.  Sets the background, cursor, and foreground font colors.|
+
+### Files in the ```./spack``` folder:
+
+|File|Description|
+|---|---|
+|`packages.yaml` |Sample package configuration file for Spack.  This particular file directs Spack to use Python3 instead of Python2 during the build process.|
 
 ## Installation
 
@@ -50,6 +57,6 @@ Then issue the following commands:
 ~/aws-env/initenv.sh
 . ~/bash_aliases
 ``` 
-Then all of the settings will be applied to the Unix enviromnent in your AWS instance.
+Then all of the settings will be applied to the Unix enviromnent in your AWS instance.  The aws-env/bin folder will also be added to your $PATH variable so that you will be able to run the scripts located there.
 
-Bob Yantosca | 07 Jan 2020 | yantosca@seas.harvard.edu
+Bob Yantosca | 08 Jan 2020 | yantosca@seas.harvard.edu
