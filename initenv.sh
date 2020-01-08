@@ -27,4 +27,7 @@ cp -f ~/aws-env/root/.bash_aliases ~
 cp -f ~/aws-env/root/.tmux.conf    ~
 cp -f ~/aws-env/root/.gitconfig    ~
 
+# Put the bin directory in the search path
+export PATH=$PATH:~/aws-env/bin
+
 #EOC
