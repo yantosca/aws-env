@@ -787,7 +787,7 @@
 ;;   https://github.com/Kitware/CMake/blob/master/Auxiliary/cmake-mode.el
 ;; Add the path to your cmake-mode.el file next to expand-file-name
 ;;-----------------------------------------------------------------------------
-(setq load-path (cons (expand-file-name "~/bin") load-path))
+(setq load-path (cons (expand-file-name "~/aws-env/bin") load-path))
 (require 'cmake-mode)
 
 ;;-----------------------------------------------------------------------------
@@ -892,4 +892,3 @@
 ;(other-window 1)                           ; move back to first window
 
 ;EOC
-emace
