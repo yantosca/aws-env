@@ -1,0 +1,5 @@
+If you are using Spack, copy the packages.yaml file from this folder to
+your ~/.spack folder.  This will tell Spack to use Python3 instead of Python2
+when doing package configurations.  This might avoid some Spack build errors.
+
+-- Bob Yantosca (yantosca@seas.harvard.edu), 08 Jan 2020
