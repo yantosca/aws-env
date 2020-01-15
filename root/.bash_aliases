@@ -176,8 +176,8 @@ function gprune() {
 alias jup="jupyter notebook --NotebookApp.token='' --no-browser --port=8999 --notebook-dir ~/"
 
 # Select Bob Y's custom environment
-alias sag="source activate geo"
-alias sdb="source deactivate"
+alias sag="conda activate geo"
+alias sdb="conda deactivate"
 export PATH=$PATH:/home/miniconda/bin:$PATH
 
 # Add Python repos to $PYTHONPATH
