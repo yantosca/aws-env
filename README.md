@@ -45,6 +45,14 @@ The table below lists all of the files contained in the aws-env repository:
 |---|---|
 |`packages.yaml` |Sample package configuration file for Spack.  This particular file directs Spack to use Python3 instead of Python2 during the build process.|
 
+### Files in the ```./tau``` folder:
+
+|File|Description|
+|---|---|
+|`run_tau.sh` |Script to run GEOS-Chem with TAU profiling (default options)|
+|`run_tau_function.sh` |Script to run GEOS-Chem with TAU profiling (function-level only)|
+|`run_tau_unwind.sh` |Script to run GEOS-Chem with TAU profiling (full unwind)|
+
 ## Installation
 
 In the home directory folder of your AWS instance, type:
