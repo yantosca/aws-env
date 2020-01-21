@@ -1,6 +1,6 @@
 [gui]
-        fontui = -family \"dejavu sans\" -size 12 -weight normal -slant roman -underline 0 -overstrike 0
-        fontdiff = -family \"DejaVu Sans Mono\" -size 11 -weight normal -slant roman -underline 0 -overstrike 0
+	fontui = -family lucida -size 12 -weight normal -slant roman -underline 0 -overstrike 0
+	fontdiff = -family lucidatypewriter -size 11 -weight normal -slant roman -underline 0 -overstrike 0
 [user]
         name = Bob Yantosca
         email = yantosca@seas.harvard.edu

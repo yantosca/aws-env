@@ -91,8 +91,17 @@ function dos2unix() {
   awk '{ sub("\r$", ""); print }' $1 > $2
 }
 
+
+#==============================================================================
+# %%%%% Personal settings: Emacs %%%%%
+#==============================================================================
+
+# Force emacs to start by loading the .emacs file
+# Send stderr outptut to /dev/null (the "don't give me your sass" option)
+alias emacs="emacs -q --eval '(setq alt-conf t)' --load ~/.emacs 2> /dev/null"
+
 # Suppress emacs warnings
-alias emacs="emacs 2 > /dev/null"
+#alias emacs="emacs 2 > /dev/null"
 
 #==============================================================================
 # %%%%% Personal settings: Compiling and running GEOS-Chem %%%%%
@@ -185,6 +194,9 @@ export PATH=$PATH:/home/miniconda/bin:$PATH
 
 # Add Python repos to $PYTHONPATH
 #export PYTHONPATH=$PYTHONPATH:/home/python/gcpy
+
+# Tell Conda not to activate the base environment
+conda config --set auto_activate_base false
 
 #==============================================================================
 # %%%%% Logins to other machines %%%%%

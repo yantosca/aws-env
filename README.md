@@ -33,6 +33,7 @@ The table below lists all of the files contained in the aws-env repository:
 |---|---|
 |`.bash_aliases` |Contains your own custom aliases and settings for your Unix login environment.  This will be sourced from the AWS .bashrc file whenever you type "source ~/.bashrc".|
 |`.bashrc-ubuntu` |Sample .bashrc file for Ubuntu.  For reference only.|
+|`.condarc`|Sample .condarc file to initialize your Conda environment.  (Turns off the base environment by default.)|
 |`.emacs`|Customization file for the Emacs editor.  Sets the fonts, colors, background, and window sizes.|
 |`.gitconfig`|Git configuration file.  Specifies the default font that will be used in the Git GUI and GitK browsers.  Also allows you to define the name and email that you wish to use in commit messages. __MUST EDIT!__
 |`.gitignore`|Specifies files in `root/'' that should not be added to the Git repository.|
