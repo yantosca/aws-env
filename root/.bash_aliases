@@ -91,6 +91,9 @@ function dos2unix() {
   awk '{ sub("\r$", ""); print }' $1 > $2
 }
 
+# Suppress emacs warnings
+alias emacs="emacs 2 > /dev/null"
+
 #==============================================================================
 # %%%%% Personal settings: Compiling and running GEOS-Chem %%%%%
 #==============================================================================
@@ -191,7 +194,9 @@ alias gcfas="$HOME/bin/xt -h fas.harvard.edu -u geoschem &"
 #==============================================================================
 # %%%%% Personal settings: Amazon Web Services cloud computing %%%%%
 #==============================================================================
-alias s3copy="aws s3 cp --request-payer=requester "
+alias s3cp="aws s3 cp --request-payer=requester "
 alias s3ls="aws s3 ls --request-payer=requester "
+alias s3rm="aws s3 rm --request-payer=requester "
+alias s3sy="aws s3 sync --request-payer=requester "
 
 #EOC
