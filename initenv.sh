@@ -20,13 +20,13 @@
 #------------------------------------------------------------------------------
 #BOC
 
-# Copy files
-cp -f ~/aws-env/root/.Xdefaults    ~
-cp -f ~/aws-env/root/.emacs        ~
-cp -f ~/aws-env/root/.bash_aliases ~
-cp -f ~/aws-env/root/.condarc ~
-cp -f ~/aws-env/root/.tmux.conf    ~
-cp -f ~/aws-env/root/.gitconfig    ~
+# Copy files to the home folder
+cp -f  ~/aws-env/root/.Xdefaults    ~
+cp -fR ~/aws-env/root/.emacs.d      ~
+cp -f  ~/aws-env/root/.bash_aliases ~
+cp -f  ~/aws-env/root/.condarc      ~
+cp -f  ~/aws-env/root/.tmux.conf    ~
+cp -f  ~/aws-env/root/.gitconfig    ~
 
 # Put the bin directory in the search path
 export PATH=$PATH:~/aws-env/bin
