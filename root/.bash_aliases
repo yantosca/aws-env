@@ -96,12 +96,8 @@ function dos2unix() {
 # %%%%% Personal settings: Emacs %%%%%
 #==============================================================================
 
-# Force emacs to start by loading the .emacs file
-# Send stderr outptut to /dev/null (the "don't give me your sass" option)
-alias emacs="emacs -q --eval '(setq alt-conf t)' --load ~/.emacs 2> /dev/null"
-
 # Suppress emacs warnings
-#alias emacs="emacs 2 > /dev/null"
+alias emacs="emacs 2 > /dev/null"
 
 #==============================================================================
 # %%%%% Personal settings: Compiling and running GEOS-Chem %%%%%
@@ -160,9 +156,13 @@ alias gitc="git -C CodeDir"
 alias getenv="cd ~/aws-env; git pull origin master"
 
 # For cloning repos from GEOS-Chem Github site
-alias clone_gc="git clone git@github.com:geoschem/geos-chem.git"
+alias clone_gcc="git clone git@github.com:geoschem/GCClassic.git"
 alias clone_gchp="git clone git@github.com:geoschem/gchp.git"
-alias clone_ut="git clone git@github.com:geoschem/geos-chem-unittest.git"
+
+# For Git submodules
+alias gsu="git submodule update --init --recursive"
+alias glog="git -C src/GEOS-Chem log --oneline "
+alias hlog="git -C src/HEMCO log --oneline "
 
 # Set a branch to follow a remote branch
 function gbup() {

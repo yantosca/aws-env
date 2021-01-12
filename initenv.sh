@@ -21,7 +21,7 @@
 #BOC
 
 # Copy files to the home folder
-cp -f  ~/aws-env/root/.Xdefaults    ~
+cp -f  ~/aws-env/root/.Xresources   ~
 cp -fR ~/aws-env/root/.emacs.d      ~
 cp -f  ~/aws-env/root/.bash_aliases ~
 cp -f  ~/aws-env/root/.condarc      ~
