@@ -40,14 +40,13 @@
 ;; FONTS - customize to look best on your system!
 ;;=============================================================================
 
-;; %%%%% NOTE: USE THIS FONT WITH MOBAXTERM (bmy, 5/25/18) %%%%%
+;; DejaVuSansMono 12pt bold
 (set-face-font
  'default "-*-DejaVuSansMono-Bold-R-*-*-*-120-*-*-*-*-iso8859-1" )
 
-;; %%%%% NOTE: USE THIS FONT WITH PUTTY AND XTERM (bmy, 5/25/18 %%%%%
 ;; Lucida Typewriter 14pt bold
-;;(set-face-font
-;; 'default "-*-Lucidatypewriter-Bold-R-*-*-*-140-*-*-*-*-iso8859-1" )
+;(set-face-font
+; 'default "-*-Lucidatypewriter-Bold-R-*-*-*-140-*-*-*-*-iso8859-1" )
 
 ;; Example of normal instead of bold
 ;; Lucida Typewriter 14pt normal
@@ -68,13 +67,12 @@
 ;; COLOR SETTINGS - customize
 ;;=============================================================================
 
-;; BACKGROUND COLOR
-(set-face-background 'default "gray75")            ; Bob's preference
-;(set-face-background 'default "FloralWhite")      ; Philippe's preference
-;(set-face-background 'default "dark slate gray")  ; ... a
-;(set-face-foreground 'default "blanched almond")  ;     few
-;(set-face-foreground 'default "black")            ;     other
-;(set-face-foreground 'default "white")            ;     options ...
+;; BACKGROUND COLOR OPTIONS (ignored if using -nw)
+(unless (featurep 'no-window-system) (set-face-background 'default "gray75"))
+;(unless (featurep 'no-window-system) (set-face-background 'default "FloralWhite")
+;(unless (featurep 'no-window-system) (set-face-background 'default "dark slate gray")
+;(unless (featurep 'no-window-system) (set-face-foreground 'default "blanched almond")
+;(unless (featurep 'no-window-system) (set-face-foreground 'default "black")
 
 ;; "COLORIZATION" COLORS FOR CODE
 (custom-set-faces
@@ -344,7 +342,7 @@
 (global-set-key [(control =)] 'joc-bounce-sexp)
 
 ;;=============================================================================
-;; MODES 
+;; MODES
 ;;=============================================================================
 
 ;; activate image mode to display images in emacs buffer (jpg, gif, tiff, ...)
@@ -377,9 +375,6 @@
 		("\\.kpp"                   . f90-mode)
 		("\\.tex$"                  . latex-mode)
 		("\\.m$"                    . matlab-mode)
-		("\\.bashrc$"               . shell-script-mode)
-		("\\.bash_aliases$"         . shell-script-mode)
-		("\\.my_personal_settings$" . shell-script-mode)
 		("\\.sh$"                   . shell-script-mode)
 		("\\.env$"                  . shell-script-mode)
 		("\\.centos7$"              . shell-script-mode)
@@ -387,6 +382,11 @@
 		("\\.yaml$"                 . yaml-mode)
 		("\\.yml$"                  . yaml-mode)
 	       )auto-mode-alist))
+
+;; Manually add certain configuration files to shell-script mode
+(add-to-list 'auto-mode-alist '(".bashrc"               . shell-script-mode))
+(add-to-list 'auto-mode-alist '(".bash_aliases"         . shell-script-mode))
+(add-to-list 'auto-mode-alist '(".my_personal_settings" . shell-script-mode))
 
 ;;-----------------------------------------------------------------------------
 ;; IDL MODE CUSTOMIZATIONS
@@ -591,13 +591,13 @@
     (setq font-lock-auto-fontify t))   ; XEmacs
 
 ;;=============================================================================
+;; SAVE DESKTOP OPTIONS
 ;; To save desktop, i.e., re-open the same files as when exiting.
 ;; Load the desktop library to do so.  For this to work, you must type
 ;; M-x desktop-save during the session.  This also needs to be done *after*
 ;; all modes are loaded -like here-, if you want the "colorization" of code
 ;; to work.
 ;;=============================================================================
-
 (load "desktop")
 (desktop-load-default)
 (desktop-read)
@@ -618,6 +618,13 @@
 ;; %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 ;; %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+;; %%%%% Bob Y's Linux Laptop preferences
+;; %%%%% Open 1 window
+;(set-frame-height (selected-frame) 34)      ; 34 lines
+;(set-frame-width  (selected-frame) 81)      ; 80 columns
+;; %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+;; %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 ;; %%%%% Bob Y's working at the office preferences 
 ;; %%%%% Open two windows side by side, 164 columns x 72 lines
 ;;(set-frame-height (selected-frame) 72)      ; 72 lines, for XMing
@@ -630,20 +637,19 @@
 ;; %%%%% Other possibilities (uncomment the one you want)
 
 ;; %%%%% Open one window, 80 columns x 60 lines, centered on screen %%%%%
-;;(set-frame-height (selected-frame) 72)    ; 72 lines 
+;;(set-frame-height (selected-frame) 72)    ; 72 lines
 ;;(set-frame-width  (selected-frame) 81)    ; 80 columns
 ;;(set-frame-position (selected-frame) 550 30)
 
-;; %%%%% Open two windows side by side, 164 columns x 72 lines
-;;(set-frame-height (selected-frame) 72)      ; 72 lines, for XMing
-;;(set-frame-height (selected-frame) 56)      ; 56 lines, for MobaXterm
-;;(set-frame-width  (selected-frame) 164)     ; 164 columns
-;;(split-window-horizontally)                 ; Use two vertical windows
-;;(other-window 1)                            ; Start in the right window
+;; %%%%% Open two windows on top of each other, 80 columns x 72 lines %%%%%
+;;(set-frame-height (selected-frame) 72)    ; 72 lines
+;;(set-frame-width  (selected-frame) 80)    ; 80 columns
+;;(split-window-vertically)                 ; Use two horizontal windows
+;;(other-window 1)                          ; Start in the bottom window
 
 ;; %%%%% Open a shell (optional, but not really necessary) %%%%%
-;(shell)                                    ; start a shell 
+;(shell)                                    ; start a shell
 ;;(rename-buffer "shell-first")             ; rename it
-;(other-window 1)                           ; move back to first window 
+;(other-window 1)                           ; move back to first window
 
 ;EOC
