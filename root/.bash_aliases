@@ -91,7 +91,6 @@ function dos2unix() {
   awk '{ sub("\r$", ""); print }' $1 > $2
 }
 
-
 #==============================================================================
 # %%%%% Personal settings: Emacs %%%%%
 #==============================================================================
@@ -100,84 +99,206 @@ function dos2unix() {
 alias emacs="emacs 2 > /dev/null"
 
 #==============================================================================
-# %%%%% Personal settings: Compiling and running GEOS-Chem %%%%%
+# %%%%% Cmake %%%%%
 #==============================================================================
 
-# Run Cmake in the specified subdirectory
-function cm() {
-   cmake -S CodeDir -B $1
+function strip_ignoreeof_from_arg_list() {
+    ##### Strip ignoreeof out of an argument list #####
+    argv=""
+    for arg in "$@"; do
+        if [[ "x${arg}" != "xignoreeof" ]]; then
+	    argv+="${arg} "
+        fi
+    done
+    echo "${argv}"
+}
+    
+function config_gc_from_rundir() {
+    ##### Function to configure GEOS-Chem from the run directory #####
+
+    # Arguments
+    argv=$(strip_ignoreeof_from_arg_list $@)
+    echo "%%% Arguments: ${argv}"
+    
+    # Local variables
+    thisDir=$(pwd -P)
+    buildDir="build"
+
+    # Error check build directory
+    if [[ ! -d ${buildDir} ]]; then
+	echo "%%% Invalid build directory! %%%"
+	cd ${thisDir}
+	return 1
+    fi
+
+    # Configure the code for type Release
+    cd ${buildDir}
+    cmake ../CodeDir -DCMAKE_BUILD_TYPE=Release -DRUNDIR=".." ${argv}
+    if [[ $? -ne 0 ]]; then
+	echo "%%% Failed configuration! %%%"
+	cd ${thisDir}
+	return 1
+    fi
+
+    # Successful return
+    echo "%%% Successful configuration: Release! %%%"
+    cd ${thisDir}
+    return 0
 }
 
-# Compile the code in the specified subdirctory w/ CMake Makefiles
-function m6() {
-   if [[ -d $1 ]]; then
-     make -C $1 -j6 install
-   fi
+function config_gc_debug_from_rundir() {
+    ##### Function to configure GEOS-Chem from the run directory #####
+
+    # Arguments
+    argv=$(strip_ignoreeof_from_arg_list $@)
+    echo "%%% Arguments: ${argv}"
+    
+    # Local variables
+    thisDir=$(pwd -P)
+    buildDir="debug"
+
+    # Error check build directory
+    if [[ ! -d ${buildDir} ]]; then
+	echo "%%% Invalid build directory! %%%"
+	cd ${thisDir}
+	return 1
+    fi
+
+    # Configure the code
+    cd ${buildDir}
+    cmake ../CodeDir -DCMAKE_BUILD_TYPE=Debug -DRUNDIR=".." ${argv}
+    if [[ $? -ne 0 ]]; then
+	echo "%%% Failed configuration! %%%"
+	cd ${thisDir}
+	return 1
+    fi
+
+    # Successful return
+    echo "%%% Successful configuration: Debug! %%%"
+    cd ${thisDir}
+    return 0
 }
 
-# Run "cm" and "m6" on the gcbuild subdirectory
-alias cf="cm gcbuild"
-alias bu="m6 gcbuild"
-alias cfd="cm gcdebug -DCMAKE_BUILD_TYPE=Debug"
-alias bud="m6 gcdebug"
+function build_gc() {
+    ##### Function to build GEOS-Chem #####
 
-# Bob Y's testing: don't turn on netCDF compression, which helps to
-# keep file sizes the same, so that they can be diffed in debugging
-unset NC_NODEFLATE
-export NC_NODEFLATE=y
+    # Arguments
+    buildDir="${1}"
 
-# Make sure that the stacksize memory is maxed out for OpenMP
-export OMP_STACKSIZE=500m
+    # Local variables
+    thisDir=$(pwd -P)
 
-# Manually set the number of OpenMP threads
-function set_omp() {
-  export OMP_NUM_THREADS=$1
-  echo "Number of OpenMP threads: $OMP_NUM_THREADS"
+    # Error checks
+    if [[ ! -d ${buildDir} ]]; then
+	echo "%%% Invalid directory: ${buildDir} %%%"
+	cd ${thisDir}
+	return 1
+    fi
+
+    # Code compilation
+    cd ${buildDir}
+    make -j
+    if [[ $? -ne 0 ]]; then
+	echo "%%% Failed compilation! %%%"
+	cd ${thisDir}
+	return 1
+    fi
+
+    # Code installation
+    make -j install
+    if [[ $? -ne 0 ]]; then
+	echo "%%% Failed Installation! %%%"
+	cd ${thisDir}
+	return 1
+    fi
+
+    # Success 
+    echo "%%% Successful Compilation and Installation! %%%"
+    cd ${thisDir}
+    return 0
 }
+
+# Aliases for compiling from the run directory
+alias cf="config_gc_from_rundir $@"
+alias bu="build_gc build"
+alias cfd="config_gc_debug_from_rundir $@"
+alias bud="build_gc debug"
 
 #==============================================================================
 # %%%%% Personal settings: Git %%%%%
 #==============================================================================
 
-# Basic Git commands
-alias gui="git gui &"
-alias gk="gitk &"
-alias gka="gitk --all &"
-alias gpo="git pull origin"
-alias gl="git log"
-alias glo="git log --oneline"
-alias glp="git log --pretty=format:'%h : %s' --topo-order --graph"
-alias update_tags="git tag -l | xargs git tag -d && git fetch -t"
-
-# Alias to tell Git to run commands in the CodeDir folder
-alias gitc="git -C CodeDir"
-
-# Update the aws-env repository
-alias getenv="cd ~/aws-env; git pull origin master"
-
-# For cloning repos from GEOS-Chem Github site
 alias clone_gcc="git clone git@github.com:geoschem/GCClassic.git"
 alias clone_gchp="git clone git@github.com:geoschem/gchp.git"
-
-# For Git submodules
-alias gsu="git submodule update --init --recursive"
+alias clone_hco="git clone git@github.com:geoschem/hemco.git"
+alias getenv="cd ~/env; git pull origin master"
+alias gitc="git -C CodeDir"
+alias gl="git log"
+alias glo="git log --oneline"
 alias glog="git -C src/GEOS-Chem log --oneline "
+alias gplog="git -C src/GCHP_GridComp/GEOSChem_GridComp/geos-chem log --oneline "
+alias glp="git log --pretty=format:'%h : %s' --topo-order --graph"
+alias gk="gitk 2>/dev/null &"
+alias gka="gitk --all 2>/dev/null &"
+alias gpo="git pull origin"
+alias gui="git gui 2>/dev/null &"
+alias gsu="git submodule update --init --recursive"
 alias hlog="git -C src/HEMCO log --oneline "
+alias hplog="git -C src/GCHP_GridComp/HEMCO_GridComp/HEMCO log --oneline "
+alias update_tags="git tag -l | xargs git tag -d && git fetch -t"
+alias gck="git -C src/GEOS-Chem checkout"
+alias gpck="git -C src/GCHP_GridComp/GEOSChem_GridComp/geos-chem checkout "
 
-# Set a branch to follow a remote branch
+function gcc2gc() {
+    ##### Navigate from GCClassic src/GEOS-Chem dir #####
+    if [[ -d ./CodeDir ]]; then 
+	cd CodeDir/src/GEOS-Chem
+    else
+	cd src/GEOS-Chem
+    fi
+}
+
+function gc2gcc() {
+    ##### Navigate from src/GEOS-Chem to GCClassic #####
+    if [[ -d ../../../CodeDir ]]; then 
+	cd ../../..
+    else
+	cd ../..
+    fi
+}
+
+function gchp2gc() {
+    ##### Navigate from GCHPctm to geos-chem #####
+    if [[ -d ./CodeDir ]]; then 
+	cd CodeDir/src/GCHP_GridComp/GEOSChem_GridComp/geos-chem
+    else
+	cd src/GCHP_GridComp/GEOSChem_GridComp/geos-chem
+    fi
+}
+
+function gc2gchp() {
+    ##### Navigate from geos-chem to GCHPctm #####
+    if [[ -d ../../../../CodeDir ]]; then 
+	cd ../../../../..
+    else
+	cd ../../../..
+    fi
+}
+
 function gbup() {
-  git branch --set-upstream-to=origin/${1} ${1}
+    ###### Set a branch to follow a remote branch #####
+    git branch --set-upstream-to=origin/${1} ${1}
 }
 
-# Remove a remote branch
 function gbrd() {
-  git branch -r -d origin/$1
+    ##### Remove a remote branch #####
+    git branch -r -d origin/$1
 }
 
-# Remove local and remote branches
 function gprune() {
-  git branch -d $1
-  gbrd $1
+    ##### Remove local and remote branches #####
+    git branch -d $1
+    gbrd $1
 }
 
 #==============================================================================
