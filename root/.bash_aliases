@@ -225,6 +225,46 @@ alias cfd="config_gc_debug_from_rundir $@"
 alias bud="build_gc debug"
 
 #==============================================================================
+# %%%%% GEOS-Chem %%%%%
+#==============================================================================
+
+# Bob Y's testing: don't turn on netCDF compression, which helps to
+# keep file sizes the same, so that they can be diffed in debugging
+unset NC_NODEFLATE
+export NC_NODEFLATE=y
+
+function set_log_file() {
+    ##### Function to define the GEOS-Chem log file #####
+    if [[ "x${1}" == "x" ]]; then
+      log=GC.log
+    else
+      log=GC_${1}.log
+    fi
+    echo ${log}
+}
+
+function gctee() {
+    ##### GEOS-Chem run, tee to log #####
+    log=$(set_log_file "${1}")
+    rm -rf ${log}
+    ./gcclassic | tee ${log} 2>&1
+}
+
+function gcrun() {
+    ##### GEOS-Chem run, pipe to log #####
+    log=$(set_log_file "${1}")
+    rm -rf ${log}
+    ./gcclassic > ${log} 2>&1
+}
+
+function gcdry() {
+    ##### GEOS-Chem dryrun, pipe to log #####
+    log=$(set_log_file "DryRun_${1}")
+    rm -rf ${log}  
+    ./gcclassic --dryrun > ${log}
+}
+
+#==============================================================================
 # %%%%% Personal settings: Git %%%%%
 #==============================================================================
 
