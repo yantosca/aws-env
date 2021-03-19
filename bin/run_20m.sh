@@ -29,6 +29,7 @@ cwd=$(pwd -P)
 
 # Replace ending time in input.geos
 sed -i -e "s/20190801 000000/20190701 002000/" input.geos
+sed -i -e "s/20190201 000000/20190101 002000/" input.geos
 
 # Replace freq & duration in HISTORY.rc
 sed -i -e "s/00000100 000000/00000000 002000/" HISTORY.rc
