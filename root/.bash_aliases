@@ -351,7 +351,7 @@ alias jup="jupyter notebook --NotebookApp.token='' --no-browser --port=8999 --no
 # Select Bob Y's custom environment
 alias sag="conda activate geo"
 alias sdb="conda deactivate"
-export PATH=$PATH:/home/miniconda/bin:$PATH
+export PATH="$PATH:/home/miniconda/bin:$PATH"
 
 # Add Python repos to $PYTHONPATH
 #export PYTHONPATH=$PYTHONPATH:/home/python/gcpy
@@ -360,16 +360,16 @@ export PATH=$PATH:/home/miniconda/bin:$PATH
 conda config --set auto_activate_base false
 
 #==============================================================================
-# %%%%% Logins to other machines %%%%%
-#==============================================================================
-alias gcfas="$HOME/bin/xt -h fas.harvard.edu -u geoschem &"
-
-#==============================================================================
 # %%%%% Personal settings: Amazon Web Services cloud computing %%%%%
 #==============================================================================
 alias s3cp="aws s3 cp --request-payer=requester "
 alias s3ls="aws s3 ls --request-payer=requester "
 alias s3rm="aws s3 rm --request-payer=requester "
 alias s3sy="aws s3 sync --request-payer=requester "
+
+#==============================================================================
+# %%%%% Personal settings: Add aws-env/bin to PATH
+#==============================================================================
+export PATH="~/aws-env/bin:${PATH}"
 
 #EOC
