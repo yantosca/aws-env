@@ -590,17 +590,13 @@
     (global-font-lock-mode 1)          ; GNU Emacs
     (setq font-lock-auto-fontify t))   ; XEmacs
 
-;;=============================================================================
-;; SAVE DESKTOP OPTIONS
-;; To save desktop, i.e., re-open the same files as when exiting.
-;; Load the desktop library to do so.  For this to work, you must type
-;; M-x desktop-save during the session.  This also needs to be done *after*
-;; all modes are loaded -like here-, if you want the "colorization" of code
-;; to work.
-;;=============================================================================
-(load "desktop")
-(desktop-load-default)
-(desktop-read)
+;;-----------------------------------------------------------------------------
+;; Enable YASnippets
+;;-----------------------------------------------------------------------------
+(add-to-list 'load-path
+              "~/.emacs.d/elpa/yasnippet-0.14.0")
+(require 'yasnippet)
+(yas-global-mode 1)
 
 ;;=============================================================================
 ;; FRAME SIZE AND POSITION

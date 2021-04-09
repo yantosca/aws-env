@@ -1,0 +1,9 @@
+# name: ds = xr.open_mfdataset(...)
+# key: md
+# --
+ds = xr.open_mfdataset(
+   ncfile,
+   drop_variables=skip_these_vars,
+   combine="nested",
+   concat_dim="time"
+)

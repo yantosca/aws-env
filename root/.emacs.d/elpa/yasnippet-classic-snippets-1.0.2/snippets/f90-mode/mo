@@ -1,0 +1,9 @@
+# contributor: Bob Yantosca <https://yantosca.github.io>
+# name: module ... end module ...
+# key: mo
+# --
+MODULE ${1:name}
+  $0
+CONTAINS
+  $0
+END MODULE ${1:name}

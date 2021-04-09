@@ -1,0 +1,7 @@
+# name: ds = xr.open_dataset(...)
+# key: od
+# --
+ds = xr.open_dataset(
+   ncfile,
+   drop_variables=skip_these_vars
+)

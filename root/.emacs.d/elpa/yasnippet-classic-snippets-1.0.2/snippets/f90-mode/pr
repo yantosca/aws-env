@@ -1,0 +1,9 @@
+# contributor: Bob Yantosca <https://yantosca.github.io>
+# name: program ... end program ...
+# key: pr
+# --
+PROGRAM ${1:name}
+  $0
+CONTAINS
+  $0
+END PROGRAM ${1:name}
