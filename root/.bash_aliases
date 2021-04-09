@@ -72,31 +72,119 @@ alias la="ls -a"
 alias lla="ls -la"
 alias llh="ls -lh"
 
-# Invoking local scripts
-alias ncpl="~/aws-env/bin/nc_chunk.pl"
-alias isco="~/aws-env/bin/isCoards"
-
-# Tmux aliases
-alias tmuxnew="tmux new -s "
-alias tmuxat="tmux a -t "
-alias tmuxde="tmux detach "
-
-# Call ncdump and pipe the result to less
-function ncd() {
-  ncdump -cts $1 | less
-}
-
-# Convert a windows file to Unix
-function dos2unix() {
-  awk '{ sub("\r$", ""); print }' $1 > $2
-}
-
 #==============================================================================
 # %%%%% Personal settings: Emacs %%%%%
 #==============================================================================
 
 # Suppress emacs warnings
 alias emacs="emacs 2 > /dev/null"
+
+#==============================================================================
+# %%%%% Personal settings: Git commands %%%%%
+#==============================================================================
+
+# Aliases for Git commands
+source /etc/bash_completion.d/git    # enable tab-completion
+alias clone_gcc="git clone git@github.com:geoschem/GCClassic.git"
+alias clone_gchp="git clone git@github.com:geoschem/gchp.git"
+alias clone_hco="git clone git@github.com:geoschem/hemco.git"
+alias getenv="cd ~/env; git pull origin master"
+alias gfp="git fetch -p"
+alias gitc="git -C CodeDir"
+alias gl="git log"
+alias glo="git log --oneline"
+alias glog="git -C src/GEOS-Chem log --oneline "
+alias gplog="git -C src/GCHP_GridComp/GEOSChem_GridComp/geos-chem log --oneline "
+alias glp="git log --pretty=format:'%h : %s' --topo-order --graph"
+alias gk="gitk 2>/dev/null &"
+alias gka="gitk --all 2>/dev/null &"
+alias gpo="git pull origin"
+alias gui="git gui 2>/dev/null &"
+alias gsu="git submodule update --init --recursive"
+alias hlog="git -C src/HEMCO log --oneline "
+alias hplog="git -C src/GCHP_GridComp/HEMCO_GridComp/HEMCO log --oneline "
+alias update_tags="git tag -l | xargs git tag -d && git fetch -t"
+alias gck="git -C src/GEOS-Chem checkout"
+alias gpck="git -C src/GCHP_GridComp/GEOSChem_GridComp/geos-chem checkout "
+
+function gcc2gc() {
+    ##### Navigate from GCClassic src/GEOS-Chem dir #####
+    if [[ -d ./CodeDir ]]; then 
+	cd CodeDir/src/GEOS-Chem
+    else
+	cd src/GEOS-Chem
+    fi
+}
+
+function gc2gcc() {
+    ##### Navigate from src/GEOS-Chem to GCClassic #####
+    if [[ -d ../../../CodeDir ]]; then 
+	cd ../../..
+    else
+	cd ../..
+    fi
+}
+
+function gchp2gc() {
+    ##### Navigate from GCHPctm to geos-chem #####
+    if [[ -d ./CodeDir ]]; then 
+	cd CodeDir/src/GCHP_GridComp/GEOSChem_GridComp/geos-chem
+    else
+	cd src/GCHP_GridComp/GEOSChem_GridComp/geos-chem
+    fi
+}
+
+function gc2gchp() {
+    ##### Navigate from geos-chem to GCHPctm #####
+    if [[ -d ../../../../CodeDir ]]; then 
+	cd ../../../../..
+    else
+	cd ../../../..
+    fi
+}
+
+function gbup() {
+    ###### Set a branch to follow a remote branch #####
+    git branch --set-upstream-to=origin/${1} ${1}
+}
+
+function gbrd() {
+    ##### Remove a remote branch #####
+    git branch -r -d origin/$1
+}
+
+function gprune() {
+    ##### Remove local and remote branches #####
+    git branch -d $1
+    gbrd $1
+}
+
+#==============================================================================
+# %%%%% netCDF %%%%%
+#==============================================================================
+
+# Panoply
+alias pan="$HOME/bin/panoply.sh &"
+
+# NetCDF scripts
+alias ncpl="nc_chunk.pl"
+unset dataDir
+
+# Invoking local scripts
+alias ncpl="~/aws-env/bin/nc_chunk.pl"
+alias isco="~/aws-env/bin/isCoards"
+
+function ncd() {
+    ##### Call ncdump and pipe the result to less #####
+    ncdump -cts $1 | less
+}
+
+#==============================================================================
+# %%%%% Tmux %%%%%
+#==============================================================================
+alias tmuxnew="tmux new -s "
+alias tmuxat="tmux a -t "
+alias tmuxde="tmux detach"
 
 #==============================================================================
 # %%%%% Cmake %%%%%
@@ -223,15 +311,15 @@ alias cf="config_gc_from_rundir $@"
 alias bu="build_gc build"
 alias cfd="config_gc_debug_from_rundir $@"
 alias bud="build_gc debug"
+alias mdc="rm -rf build/*; rm -rf debug/*"
+
+# For aerochem/KPP development
+alias cfa="cf -DCUSTOMMECH=y $@"
+alias cfad="cfd -DCUSTOMMECH=y $@"
 
 #==============================================================================
 # %%%%% GEOS-Chem %%%%%
 #==============================================================================
-
-# Bob Y's testing: don't turn on netCDF compression, which helps to
-# keep file sizes the same, so that they can be diffed in debugging
-unset NC_NODEFLATE
-export NC_NODEFLATE=y
 
 function set_log_file() {
     ##### Function to define the GEOS-Chem log file #####
@@ -265,82 +353,16 @@ function gcdry() {
 }
 
 #==============================================================================
-# %%%%% Personal settings: Git %%%%%
+# %%%%% Misc stuff %%%%%
 #==============================================================================
 
-alias clone_gcc="git clone git@github.com:geoschem/GCClassic.git"
-alias clone_gchp="git clone git@github.com:geoschem/gchp.git"
-alias clone_hco="git clone git@github.com:geoschem/hemco.git"
-alias getenv="cd ~/env; git pull origin master"
-alias gitc="git -C CodeDir"
-alias gl="git log"
-alias glo="git log --oneline"
-alias glog="git -C src/GEOS-Chem log --oneline "
-alias gplog="git -C src/GCHP_GridComp/GEOSChem_GridComp/geos-chem log --oneline "
-alias glp="git log --pretty=format:'%h : %s' --topo-order --graph"
-alias gk="gitk 2>/dev/null &"
-alias gka="gitk --all 2>/dev/null &"
-alias gpo="git pull origin"
-alias gui="git gui 2>/dev/null &"
-alias gsu="git submodule update --init --recursive"
-alias hlog="git -C src/HEMCO log --oneline "
-alias hplog="git -C src/GCHP_GridComp/HEMCO_GridComp/HEMCO log --oneline "
-alias update_tags="git tag -l | xargs git tag -d && git fetch -t"
-alias gck="git -C src/GEOS-Chem checkout"
-alias gpck="git -C src/GCHP_GridComp/GEOSChem_GridComp/geos-chem checkout "
-alias hck="git -C src/HEMCO checkout"
-alias hpck="git -C src/GCHP_GridComp/HEMCO_GridComp/HEMCO checkout "
+# Misc aliases
+alias rmcore="rm core.*"
 
-function gcc2gc() {
-    ##### Navigate from GCClassic src/GEOS-Chem dir #####
-    if [[ -d ./CodeDir ]]; then 
-	cd CodeDir/src/GEOS-Chem
-    else
-	cd src/GEOS-Chem
-    fi
-}
-
-function gc2gcc() {
-    ##### Navigate from src/GEOS-Chem to GCClassic #####
-    if [[ -d ../../../CodeDir ]]; then 
-	cd ../../..
-    else
-	cd ../..
-    fi
-}
-
-function gchp2gc() {
-    ##### Navigate from GCHPctm to geos-chem #####
-    if [[ -d ./CodeDir ]]; then 
-	cd CodeDir/src/GCHP_GridComp/GEOSChem_GridComp/geos-chem
-    else
-	cd src/GCHP_GridComp/GEOSChem_GridComp/geos-chem
-    fi
-}
-
-function gc2gchp() {
-    ##### Navigate from geos-chem to GCHPctm #####
-    if [[ -d ../../../../CodeDir ]]; then 
-	cd ../../../../..
-    else
-	cd ../../../..
-    fi
-}
-
-function gbup() {
-    ###### Set a branch to follow a remote branch #####
-    git branch --set-upstream-to=origin/${1} ${1}
-}
-
-function gbrd() {
-    ##### Remove a remote branch #####
-    git branch -r -d origin/$1
-}
-
-function gprune() {
-    ##### Remove local and remote branches #####
-    git branch -d $1
-    gbrd $1
+function dos2unix() {
+    ##### Convert a windows file to Unix #####
+    awk '{ sub("\r$", ""); print }' ${1} > temp.txt
+    mv temp.txt $1 > /dev/null
 }
 
 #==============================================================================
