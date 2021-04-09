@@ -288,6 +288,8 @@ alias hplog="git -C src/GCHP_GridComp/HEMCO_GridComp/HEMCO log --oneline "
 alias update_tags="git tag -l | xargs git tag -d && git fetch -t"
 alias gck="git -C src/GEOS-Chem checkout"
 alias gpck="git -C src/GCHP_GridComp/GEOSChem_GridComp/geos-chem checkout "
+alias hck="git -C src/HEMCO checkout"
+alias hpck="git -C src/GCHP_GridComp/HEMCO_GridComp/HEMCO checkout "
 
 function gcc2gc() {
     ##### Navigate from GCClassic src/GEOS-Chem dir #####
