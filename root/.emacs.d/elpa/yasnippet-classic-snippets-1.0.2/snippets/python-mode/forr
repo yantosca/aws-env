@@ -1,5 +1,0 @@
-# name: for ... in range()... : ...
-# key: forr
-# --
-for ${var} in range(x):
-    $0

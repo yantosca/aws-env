@@ -1,0 +1,3 @@
+[submodule "root/.emacs.d/emacs-config"]
+	path = root/.emacs.d/emacs-config
+	url = https://github.com/yantosca/emacs-config.git

@@ -1,5 +1,0 @@
-# contributor: Bob Yantosca <https://yantosca.github.io>
-# name: logical
-# key: rf4
-# --
-    REAL(f4) :: $0

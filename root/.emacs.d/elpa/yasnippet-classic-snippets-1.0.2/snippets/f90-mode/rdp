@@ -1,5 +1,0 @@
-# contributor: Bob Yantosca <https://yantosca.github.io>
-# name: logical
-# key: rdp
-# --
-    REAL(dp) :: $0
