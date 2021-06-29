@@ -20,6 +20,9 @@
 #------------------------------------------------------------------------------
 #BOC
 
+# Fetch the emacs-config submodule
+git submodule update --init --recursive
+
 # Copy files to the home folder
 cp -f  ~/aws-env/root/.Xresources   ~
 cp -fR ~/aws-env/root/.emacs.d      ~
