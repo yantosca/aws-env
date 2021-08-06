@@ -77,7 +77,7 @@ alias llh="ls -lh"
 #==============================================================================
 
 # Suppress emacs warnings
-alias emacs="emacs 2 > /dev/null"
+#alias emacs="emacs 2 > /dev/null"
 
 #==============================================================================
 # %%%%% Personal settings: Git commands %%%%%
