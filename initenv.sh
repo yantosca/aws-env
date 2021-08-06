@@ -20,18 +20,22 @@
 #------------------------------------------------------------------------------
 #BOC
 
-# Fetch the emacs-config submodule
-cd ~/aws-env
-git submodule update --init --recursive
-cd ~
-
 # Copy files to the home folder
-cp -f  ~/aws-env/root/.Xresources   ~
-cp -fR ~/aws-env/root/.emacs.d      ~
-cp -f  ~/aws-env/root/.bash_aliases ~
-cp -f  ~/aws-env/root/.condarc      ~
-cp -f  ~/aws-env/root/.tmux.conf    ~
-cp -f  ~/aws-env/root/.gitconfig    ~
+cp -f ~/aws-env/root/.Xresources   ~
+cp -f ~/aws-env/root/.bash_aliases ~
+cp -f ~/aws-env/root/.condarc      ~
+cp -f ~/aws-env/root/.tmux.conf    ~
+cp -f ~/aws-env/root/.gitconfig    ~
+
+# Apply the X11 settings in .Xresources
+xrdb ~/.Xresources
+
+# Initialize emacs
+cd ~/aws-env/
+git submodule update --init --recursive
+cd root/.emacs.d/emacs-config
+./install.sh
+cd ~
 
 # Put the bin directory in the search path
 export PATH=$PATH:~/aws-env/bin
