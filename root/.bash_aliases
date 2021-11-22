@@ -230,7 +230,7 @@ function config_gc_from_rundir() {
 
     # Configure the code for type Release
     cd ${buildDir}
-    cmake ../CodeDir -DCMAKE_BUILD_TYPE=Release -DRUNDIR=".." ${argv}
+    cmake ../CodeDir -DRUNDIR=".." ${argv}
     if [[ $? -ne 0 ]]; then
 	echo "%%% Failed configuration! %%%"
 	cd ${thisDir}
@@ -238,7 +238,7 @@ function config_gc_from_rundir() {
     fi
 
     # Successful return
-    echo "%%% Successful configuration: Release! %%%"
+    echo "%%% Successful configuration! %%%"
     cd ${thisDir}
     return 0
 }
