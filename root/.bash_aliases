@@ -418,11 +418,11 @@ alias jup="jupyter notebook --NotebookApp.token='' --no-browser --port=8999 --no
 
 # Select Bob Y's custom environment
 alias sag="conda activate geo"
-alias sdb="conda deactivate"
+alias sdg="conda deactivate"
 export PATH="$PATH:/home/miniconda/bin:$PATH"
 
 # Add Python repos to $PYTHONPATH
-#export PYTHONPATH=$PYTHONPATH:/home/python/gcpy
+export PYTHONPATH=$PYTHONPATH:/home/ubuntu/gcpy
 
 # Tell Conda not to activate the base environment
 conda config --set auto_activate_base false
