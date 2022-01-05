@@ -33,7 +33,7 @@ xrdb ~/.Xresources
 # Initialize emacs
 cd ~/aws-env/
 git submodule update --init --recursive
-cp -R root/.emacs.d ~
+cp -fR root/.emacs.d ~
 cd ~/.emacs.d/emacs-config
 ./install.sh
 cd ~

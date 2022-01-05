@@ -14,11 +14,11 @@
 #  (will also be called each time you source ~/.bashrc)
 #
 # !REMARKS:
-#  The .bashrc file contains settings that are common to all users of 
+#  The .bashrc file contains settings that are common to all users of
 #  GEOS-Chem.  But here you can add settings that would only be applicable
 #  to your own environment.
 #
-# !REVISION HISTORY: 
+# !REVISION HISTORY:
 #  Use the gitk browser to view the revision history!
 #EOP
 #------------------------------------------------------------------------------
@@ -29,7 +29,7 @@
 #==============================================================================
 
 # Override the system prompt (96=teal)
-PS1="\[\e[1;96m\][\h \W]$\[\e[0m\] "     
+PS1="\[\e[1;96m\][\h \W]$\[\e[0m\] "
 
 # Settings for colorization
 export GREP_COLOR=32
@@ -43,15 +43,13 @@ export LS_COLORS='no=00:fi=00:di=01;33:ln=01;36:pi=40;33:so=01;35:do=01;35:bd=40
 alias disk="du -h -s -c"
 alias g="grep -in --color=auto"
 alias gt="grep -in --text"
-alias gf="gifview -a"
-alias m="less"
-alias me="xterm &"
+alias m="less -CR"
+alias me="xterm 2>/dev/null &"
 alias proc="ps -ef | grep $USER | sort"
 alias pu="rm *~"
 alias pua="rm .*~"
 alias sb=". ~/.bashrc"
 alias sba=". ~/.bash_aliases"
-alias ssh="ssh -YA"
 alias tf="tail --follow"
 alias zap="kill -9"
 alias cd="cd -P"
@@ -88,60 +86,38 @@ alias llh="ls -lh"
 alias clone_gcc="git clone git@github.com:geoschem/GCClassic.git"
 alias clone_gchp="git clone git@github.com:geoschem/gchp.git"
 alias clone_hco="git clone git@github.com:geoschem/hemco.git"
-alias getenv="cd ~/env; git pull origin master"
 alias gfp="git fetch -p"
 alias gitc="git -C CodeDir"
 alias gl="git log"
 alias glo="git log --oneline"
-alias glog="git -C src/GEOS-Chem log --oneline "
-alias gplog="git -C src/GCHP_GridComp/GEOSChem_GridComp/geos-chem log --oneline "
 alias glp="git log --pretty=format:'%h : %s' --topo-order --graph"
 alias gk="gitk 2>/dev/null &"
 alias gka="gitk --all 2>/dev/null &"
+alias gkb="gitk 2>/dev/null -b "
 alias gpo="git pull origin"
 alias gui="git gui 2>/dev/null &"
 alias gsu="git submodule update --init --recursive"
-alias hlog="git -C src/HEMCO log --oneline "
-alias hplog="git -C src/GCHP_GridComp/HEMCO_GridComp/HEMCO log --oneline "
 alias update_tags="git tag -l | xargs git tag -d && git fetch -t"
+
+# Git shortcuts for GEOS-Chem Classic
+alias gcc2gc="cd src/GEOS-Chem"
+alias gc2gcc="cd ../.."
+alias gcc2hco="cd src/HEMCO"
+alias hco2gcc="cd ../.."
 alias gck="git -C src/GEOS-Chem checkout"
+alias hck="git -C src/HEMCO checkout"
+alias glog="git -C src/GEOS-Chem log --oneline "
+alias hlog="git -C src/HEMCO log --oneline "
+
+# Git shortcuts for GCHP
+alias gchp2gc="cd src/GCHP_GridComp/GEOSChem_GridComp/geos-chem"
+alias gc2gchp="cd ../../../.."
+alias gchp2hco="cd src/GCHP_GridComp/HEMCO_GridComp/HEMCO"
+alias hco2gchp="cd ../../../.."
 alias gpck="git -C src/GCHP_GridComp/GEOSChem_GridComp/geos-chem checkout "
-
-function gcc2gc() {
-    ##### Navigate from GCClassic src/GEOS-Chem dir #####
-    if [[ -d ./CodeDir ]]; then 
-	cd CodeDir/src/GEOS-Chem
-    else
-	cd src/GEOS-Chem
-    fi
-}
-
-function gc2gcc() {
-    ##### Navigate from src/GEOS-Chem to GCClassic #####
-    if [[ -d ../../../CodeDir ]]; then 
-	cd ../../..
-    else
-	cd ../..
-    fi
-}
-
-function gchp2gc() {
-    ##### Navigate from GCHPctm to geos-chem #####
-    if [[ -d ./CodeDir ]]; then 
-	cd CodeDir/src/GCHP_GridComp/GEOSChem_GridComp/geos-chem
-    else
-	cd src/GCHP_GridComp/GEOSChem_GridComp/geos-chem
-    fi
-}
-
-function gc2gchp() {
-    ##### Navigate from geos-chem to GCHPctm #####
-    if [[ -d ../../../../CodeDir ]]; then 
-	cd ../../../../..
-    else
-	cd ../../../..
-    fi
-}
+alias hpck="git -C src/GCHP_GridComp/HEMCO_GridComp/HEMCO checkout "
+alias gplog="git -C src/GCHP_GridComp/GEOSChem_GridComp/geos-chem log --oneline "
+alias hplog="git -C src/GCHP_GridComp/HEMCO_GridComp/HEMCO log --oneline "
 
 function gbup() {
     ###### Set a branch to follow a remote branch #####
@@ -149,7 +125,7 @@ function gbup() {
 }
 
 function gbrd() {
-    ##### Remove a remote branch #####
+    ###### Remove remote branches #####
     git branch -r -d origin/$1
 }
 
@@ -159,14 +135,73 @@ function gprune() {
     gbrd $1
 }
 
-function ghgc() {
-    ##### Clone a repo from github.com/geoschem #####
-    git clone git@github.com:geoschem/${1}.git
+function heads() {
+    ##### Print the head commits for each Git submodule #####
+    n_pad=23
+    pad="                       "
+    submods=$(grep submodule .gitmodules)
+    for s in $submods; do
+	submod=${s/\[submodule/}
+	submod=${submod/\]/}
+	submod=${submod/\"/}
+	submod=${submod/\"/}
+	if [[ "x$submod" != "x" ]]; then
+	    if [[ -d $submod ]]; then
+		head=$(git -C $submod log --oneline -1)
+		y=$(basename $submod)
+		echo "${y:0:n_pad}${pad:0:$((n_pad - ${#y}))}: $head"
+	    fi
+	fi
+    done
 }
-function ghy() {
-    ##### Clone a repo from github.com/yantosca #####
-    git clone git@github.com:yantosca/${1}.git
+
+#==============================================================================
+# %%%%% GCST reserved node holyjacob01 %%%%%
+#==============================================================================
+unset LOCAL_HOME
+
+# Command to ssh into holyjacob01 (visible from all nodes)
+alias hj1="ssh -YA holyjacob01"
+
+# Settings that will only be visible from holyjacob01
+if [[ "x${HOSTNAME}" == "xholyjacob01.rc.fas.harvard.edu" ]]; then
+  export LOCAL_HOME=/local/ryantosca
+
+  # KPP settings on holyjacob01 (only add to path if it's not there)
+  if [[ ! "KPP" =~ ${PATH} ]]; then
+      export PATH="${PATH}:/local/ryantosca/GC/KPP/kpp-code/bin"
+  fi
+fi
+
+function set_omp() {
+    ##### Manually set the number of OpenMP threads #####
+    export OMP_NUM_THREADS=${1}
+    echo "Number of OpenMP threads: ${OMP_NUM_THREADS}"
 }
+
+#==============================================================================
+# %%%%% Logins to other machines %%%%%
+#==============================================================================
+alias gcfas="${HOME}/bin/xt -h fas.harvard.edu -u geoschem &"
+alias awsgo="ssh -YA -i ~/.ssh/bmy_aws_keypair.pem "
+function awsagent() {
+  eval $(ssh-agent -s)
+  ssh-add ~/.ssh/bmy_aws_keypair.pem
+}
+
+#==============================================================================
+# %%%%% Data paths on Cannon %%%%%
+#==============================================================================
+export GCGRID_ROOT="/n/holyscratch01/external_repos/GEOS-CHEM/gcgrid"
+export DATA_ROOT="${GCGRID_ROOT}/data"
+export EXTDATA="${DATA_ROOT}/ExtData"
+export HEMCO_DATA_ROOT="${EXTDATA}/HEMCO"
+export FTP_ROOT="${GCGRID_ROOT}/geos-chem"
+export VAL_ROOT="${FTP_ROOT}/validation"
+export SCRATCH_HOME="${SCRATCH}/jacob_lab/$USER"
+alias sh="cd ${SCRATCH_HOME}"
+alias sgc="cd ${SCRATCH_HOME}/GC"
+alias cd_data="cd $dataDir"
 
 #==============================================================================
 # %%%%% netCDF %%%%%
@@ -209,14 +244,14 @@ function strip_ignoreeof_from_arg_list() {
     done
     echo "${argv}"
 }
-    
+
 function config_gc_from_rundir() {
     ##### Function to configure GEOS-Chem from the run directory #####
 
     # Arguments
     argv=$(strip_ignoreeof_from_arg_list $@)
     echo "%%% Arguments: ${argv}"
-    
+
     # Local variables
     thisDir=$(pwd -P)
     buildDir="build"
@@ -249,7 +284,7 @@ function config_gc_debug_from_rundir() {
     # Arguments
     argv=$(strip_ignoreeof_from_arg_list $@)
     echo "%%% Arguments: ${argv}"
-    
+
     # Local variables
     thisDir=$(pwd -P)
     buildDir="debug"
@@ -309,7 +344,7 @@ function build_gc() {
 	return 1
     fi
 
-    # Success 
+    # Success
     echo "%%% Successful Compilation and Installation! %%%"
     cd ${thisDir}
     return 0
@@ -357,7 +392,7 @@ function gcrun() {
 function gcdry() {
     ##### GEOS-Chem dryrun, pipe to log #####
     log=$(set_log_file "DryRun_${1}")
-    rm -rf ${log}  
+    rm -rf ${log}
     ./gcclassic --dryrun > ${log}
 }
 
@@ -405,4 +440,8 @@ alias s3sy="aws s3 sync --request-payer=requester "
 #==============================================================================
 export PATH="~/aws-env/bin:${PATH}"
 
+# Add local bin folder to the head of $PATH (if it's not there)
+if [[ ! "~/aws-env/bin" =~ $PATH ]]; then
+    export PATH="~/aws-env/bin:${PATH}"
+fi
 #EOC
