@@ -21,11 +21,12 @@
 #BOC
 
 # Copy files to the home folder
-cp -f ~/aws-env/root/.Xresources   ~
-cp -f ~/aws-env/root/.bash_aliases ~
-cp -f ~/aws-env/root/.condarc      ~
-cp -f ~/aws-env/root/.tmux.conf    ~
-cp -f ~/aws-env/root/.gitconfig    ~
+cp -f ~/aws-env/root/.Xresources     ~
+cp -f ~/aws-env/root/.bash_aliases   ~
+cp -f ~/aws-env/root/.bash_functions ~
+cp -f ~/aws-env/root/.condarc        ~
+cp -f ~/aws-env/root/.tmux.conf      ~
+cp -f ~/aws-env/root/.gitconfig      ~
 
 # Apply the X11 settings in .Xresources
 xrdb ~/.Xresources

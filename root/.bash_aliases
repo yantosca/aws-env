@@ -119,66 +119,6 @@ alias hpck="git -C src/GCHP_GridComp/HEMCO_GridComp/HEMCO checkout "
 alias gplog="git -C src/GCHP_GridComp/GEOSChem_GridComp/geos-chem log --oneline "
 alias hplog="git -C src/GCHP_GridComp/HEMCO_GridComp/HEMCO log --oneline "
 
-function gbup() {
-    ###### Set a branch to follow a remote branch #####
-    git branch --set-upstream-to=origin/${1} ${1}
-}
-
-function gbrd() {
-    ###### Remove remote branches #####
-    git branch -r -d origin/$1
-}
-
-function gprune() {
-    ##### Remove local and remote branches #####
-    git branch -d $1
-    gbrd $1
-}
-
-function heads() {
-    ##### Print the head commits for each Git submodule #####
-    n_pad=23
-    pad="                       "
-    submods=$(grep submodule .gitmodules)
-    for s in $submods; do
-	submod=${s/\[submodule/}
-	submod=${submod/\]/}
-	submod=${submod/\"/}
-	submod=${submod/\"/}
-	if [[ "x$submod" != "x" ]]; then
-	    if [[ -d $submod ]]; then
-		head=$(git -C $submod log --oneline -1)
-		y=$(basename $submod)
-		echo "${y:0:n_pad}${pad:0:$((n_pad - ${#y}))}: $head"
-	    fi
-	fi
-    done
-}
-
-#==============================================================================
-# %%%%% GCST reserved node holyjacob01 %%%%%
-#==============================================================================
-unset LOCAL_HOME
-
-# Command to ssh into holyjacob01 (visible from all nodes)
-alias hj1="ssh -YA holyjacob01"
-
-# Settings that will only be visible from holyjacob01
-if [[ "x${HOSTNAME}" == "xholyjacob01.rc.fas.harvard.edu" ]]; then
-  export LOCAL_HOME=/local/ryantosca
-
-  # KPP settings on holyjacob01 (only add to path if it's not there)
-  if [[ ! "KPP" =~ ${PATH} ]]; then
-      export PATH="${PATH}:/local/ryantosca/GC/KPP/kpp-code/bin"
-  fi
-fi
-
-function set_omp() {
-    ##### Manually set the number of OpenMP threads #####
-    export OMP_NUM_THREADS=${1}
-    echo "Number of OpenMP threads: ${OMP_NUM_THREADS}"
-}
-
 #==============================================================================
 # %%%%% Logins to other machines %%%%%
 #==============================================================================
@@ -218,137 +158,12 @@ unset dataDir
 alias ncpl="~/aws-env/bin/nc_chunk.pl"
 alias isco="~/aws-env/bin/isCoards"
 
-function ncd() {
-    ##### Call ncdump and pipe the result to less #####
-    ncdump -cts $1 | less
-}
-
 #==============================================================================
 # %%%%% Tmux %%%%%
 #==============================================================================
 alias tmuxnew="tmux new -s "
 alias tmuxat="tmux a -t "
 alias tmuxde="tmux detach"
-
-#==============================================================================
-# %%%%% Cmake %%%%%
-#==============================================================================
-
-function strip_ignoreeof_from_arg_list() {
-    ##### Strip ignoreeof out of an argument list #####
-    argv=""
-    for arg in "$@"; do
-        if [[ "x${arg}" != "xignoreeof" ]]; then
-	    argv+="${arg} "
-        fi
-    done
-    echo "${argv}"
-}
-
-function config_gc_from_rundir() {
-    ##### Function to configure GEOS-Chem from the run directory #####
-
-    # Arguments
-    argv=$(strip_ignoreeof_from_arg_list $@)
-    echo "%%% Arguments: ${argv}"
-
-    # Local variables
-    thisDir=$(pwd -P)
-    buildDir="build"
-
-    # Error check build directory
-    if [[ ! -d ${buildDir} ]]; then
-	echo "%%% Invalid build directory! %%%"
-	cd ${thisDir}
-	return 1
-    fi
-
-    # Configure the code for type Release
-    cd ${buildDir}
-    cmake ../CodeDir -DRUNDIR=".." ${argv}
-    if [[ $? -ne 0 ]]; then
-	echo "%%% Failed configuration! %%%"
-	cd ${thisDir}
-	return 1
-    fi
-
-    # Successful return
-    echo "%%% Successful configuration! %%%"
-    cd ${thisDir}
-    return 0
-}
-
-function config_gc_debug_from_rundir() {
-    ##### Function to configure GEOS-Chem from the run directory #####
-
-    # Arguments
-    argv=$(strip_ignoreeof_from_arg_list $@)
-    echo "%%% Arguments: ${argv}"
-
-    # Local variables
-    thisDir=$(pwd -P)
-    buildDir="debug"
-
-    # Error check build directory
-    if [[ ! -d ${buildDir} ]]; then
-	echo "%%% Invalid build directory! %%%"
-	cd ${thisDir}
-	return 1
-    fi
-
-    # Configure the code
-    cd ${buildDir}
-    cmake ../CodeDir -DCMAKE_BUILD_TYPE=Debug -DRUNDIR=".." ${argv}
-    if [[ $? -ne 0 ]]; then
-	echo "%%% Failed configuration! %%%"
-	cd ${thisDir}
-	return 1
-    fi
-
-    # Successful return
-    echo "%%% Successful configuration: Debug! %%%"
-    cd ${thisDir}
-    return 0
-}
-
-function build_gc() {
-    ##### Function to build GEOS-Chem #####
-
-    # Arguments
-    buildDir="${1}"
-
-    # Local variables
-    thisDir=$(pwd -P)
-
-    # Error checks
-    if [[ ! -d ${buildDir} ]]; then
-	echo "%%% Invalid directory: ${buildDir} %%%"
-	cd ${thisDir}
-	return 1
-    fi
-
-    # Code compilation
-    cd ${buildDir}
-    make -j
-    if [[ $? -ne 0 ]]; then
-	echo "%%% Failed compilation! %%%"
-	cd ${thisDir}
-	return 1
-    fi
-
-    # Code installation
-    make -j install
-    if [[ $? -ne 0 ]]; then
-	echo "%%% Failed Installation! %%%"
-	cd ${thisDir}
-	return 1
-    fi
-
-    # Success
-    echo "%%% Successful Compilation and Installation! %%%"
-    cd ${thisDir}
-    return 0
-}
 
 # Aliases for compiling from the run directory
 alias cf="config_gc_from_rundir $@"
@@ -362,52 +177,11 @@ alias cfa="cf -DCUSTOMMECH=y $@"
 alias cfad="cfd -DCUSTOMMECH=y $@"
 
 #==============================================================================
-# %%%%% GEOS-Chem %%%%%
-#==============================================================================
-
-function set_log_file() {
-    ##### Function to define the GEOS-Chem log file #####
-    if [[ "x${1}" == "x" ]]; then
-      log=GC.log
-    else
-      log=GC_${1}.log
-    fi
-    echo ${log}
-}
-
-function gctee() {
-    ##### GEOS-Chem run, tee to log #####
-    log=$(set_log_file "${1}")
-    rm -rf ${log}
-    ./gcclassic | tee ${log} 2>&1
-}
-
-function gcrun() {
-    ##### GEOS-Chem run, pipe to log #####
-    log=$(set_log_file "${1}")
-    rm -rf ${log}
-    ./gcclassic > ${log} 2>&1
-}
-
-function gcdry() {
-    ##### GEOS-Chem dryrun, pipe to log #####
-    log=$(set_log_file "DryRun_${1}")
-    rm -rf ${log}
-    ./gcclassic --dryrun > ${log}
-}
-
-#==============================================================================
 # %%%%% Misc stuff %%%%%
 #==============================================================================
 
 # Misc aliases
 alias rmcore="rm core.*"
-
-function dos2unix() {
-    ##### Convert a windows file to Unix #####
-    awk '{ sub("\r$", ""); print }' ${1} > temp.txt
-    mv temp.txt $1 > /dev/null
-}
 
 #==============================================================================
 # %%%%% Personal Settings: Python environments %%%%%
@@ -436,12 +210,17 @@ alias s3rm="aws s3 rm --request-payer=requester "
 alias s3sy="aws s3 sync --request-payer=requester "
 
 #==============================================================================
-# %%%%% Personal settings: Add aws-env/bin to PATH
+# %%%%% Personal settings: Add aws-env/bin to PATH %%%%%
 #==============================================================================
-export PATH="~/aws-env/bin:${PATH}"
-
-# Add local bin folder to the head of $PATH (if it's not there)
 if [[ ! "~/aws-env/bin" =~ $PATH ]]; then
     export PATH="~/aws-env/bin:${PATH}"
 fi
+
+#==============================================================================
+# %%%%% Personal settings: Load bash functions %%%%%
+#=============================================================================
+if [[ -f ~/.bash_functions ]]; then
+    . ~/.bash_functions
+fi
+
 #EOC
