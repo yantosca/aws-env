@@ -2,8 +2,8 @@
 	fontui = -family lucida -size 12 -weight normal -slant roman -underline 0 -overstrike 0
 	fontdiff = -family lucidatypewriter -size 11 -weight normal -slant roman -underline 0 -overstrike 0
 [user]
-        name = Bob Yantosca
-        email = yantosca@seas.harvard.edu
+        name  = ubuntu
+        email = ubuntu@aws.com
 [core]
         editor = emacs
 # Enforce SSH
