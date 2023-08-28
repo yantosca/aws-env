@@ -28,8 +28,22 @@ fi
 cwd=$(pwd -P)
 
 # Replace ending time in input.geos
-sed -i -e "s/20190801 000000/20190701 010000/" input.geos
-sed -i -e "s/20190201 000000/20190101 010000/" input.geos
+if [[ -f input.geos ]]; then
+    sed -i -e "s/20190801 000000/20190701 010000/" input.geos
+    sed -i -e "s/20190201 000000/20190101 010000/" input.geos
+    sed -i -e "s/20190201 000000/20190101 010000/" input.geos
+    sed -i -e "s/20130201 000000/20130101 010000/" input.geos
+    sed -i -e "s/20110201 000000/20110101 010000/" input.geos
+fi  
+
+# Replace ending time in input_options.yml
+if [[ -f geoschem_config.yml ]]; then
+    sed -i -e "s/20190801, 000000/20190701, 010000/" geoschem_config.yml
+    sed -i -e "s/20190201, 000000/20190101, 010000/" geoschem_config.yml
+    sed -i -e "s/20190201, 000000/20190101, 010000/" geoschem_config.yml
+    sed -i -e "s/20130201, 000000/20130101, 010000/" geoschem_config.yml
+    sed -i -e "s/20110201, 000000/20110101, 010000/" geoschem_config.yml
+fi
 
 # Replace freq & duration in HISTORY.rc
 sed -i -e "s/00000100 000000/00000000 010000/" HISTORY.rc

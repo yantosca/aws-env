@@ -27,9 +27,12 @@ fi
 # Get the current folder
 cwd=$(pwd -P)
 
-# Replace ending time in input.geos
-sed -i -e "s/20190801 000000/20190708 000000/" input.geos
-sed -i -e "s/20190101 000000/20190108 000000/" input.geos
+sed -i -e "s/20190801, 000000/20190708, 000000/" geoschem_config.yml
+sed -i -e "s/20160801, 000000/20160708, 000000/" geoschem_config.yml
+sed -i -e "s/20130801, 000000/20130708, 000000/" geoschem_config.yml
+sed -i -e "s/20190201, 000000/20190108, 000000/" geoschem_config.yml
+sed -i -e "s/20160201, 000000/20160108, 000000/" geoschem_config.yml
+sed -i -e "s/20130201, 000000/20130108, 000000/" geoschem_config.yml
 
 # Replace freq & duration in HISTORY.rc
 sed -i -e "s/00000100 000000/00000007 000000/" HISTORY.rc
