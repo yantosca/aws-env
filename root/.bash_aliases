@@ -83,9 +83,9 @@ alias llh="ls -lh"
 
 # Aliases for Git commands
 #source /etc/bash_completion.d/git    # enable tab-completion
-alias clone_gcc="git clone git@github.com:geoschem/GCClassic.git"
-alias clone_gchp="git clone git@github.com:geoschem/gchp.git"
-alias clone_hco="git clone git@github.com:geoschem/hemco.git"
+alias clone_gcc="git clone --recurse-submodules git@github.com:geoschem/GCClassic.git"
+alias clone_gchp="git clone --recurse-submodules git@github.com:geoschem/gchp.git"
+alias clone_hco="git clone --recurse-submodules git@github.com:geoschem/hemco.git"
 alias gfp="git fetch -p"
 alias gitc="git -C CodeDir"
 alias gl="git log"
