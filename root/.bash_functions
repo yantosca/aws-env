@@ -27,36 +27,62 @@
 function gbup() {
     ###### Set a branch to follow a remote branch #####
     branch=${1/origin\/}
+    branch=${branch/upstream\/}
     git branch --set-upstream-to=origin/${branch} ${branch}
 }
 
 function gbrd() {
     ###### Remove remote branches #####
     branch=${1/origin\/}
-    git branch -r -d origin/$branch
+    branch=${branch/upstream\/}
+
+    # Remove branch from origin
+    if [ $(git rev-parse --verify origin/$branch 2>/dev/null) ]; then
+	git branch -r -d origin/$branch
+    fi
+
+    # Remove branch from upstream
+    if [ $(git rev-parse --verify upstream/$branch 2>/dev/null) ]; then
+	git branch -r -d upstream/$branch
+    fi
 }
 
 function gprune() {
     ##### Remove local and remote branches #####
     branch=${1/origin\/}
-    git branch -d $branch
+    branch=${branch/upstream\/}
+
+    # Remove local branch
+    if [ $(git rev-parse --verify $branch 2>/dev/null) ]; then
+	git branch -d $branch
+    fi
+
+    # Remove remote branches
     gbrd $branch
+}
+
+function gdelrem() {
+    ##### Remove a remote branch #####
+    branch=${1/origin\/}
+    git push origin :${branch}
 }
 
 function heads() {
     ##### Print the head commits for each Git submodule #####
+    ##### as well as for the superproject folder,       #####
     n_pad=23
     pad="                       "
-    submods=$(grep submodule .gitmodules)
-    for s in $submods; do
-	submod=${s/\[submodule/}
-	submod=${submod/\]/}
-	submod=${submod/\"/}
-	submod=${submod/\"/}
+    baseDir=$(basename $(pwd -P))
+    submods=(.)
+    submods+=$(grep path "./.gitmodules")
+    submods=${submods//path = /}
+    for submod in ${submods[@]}; do
 	if [[ "x$submod" != "x" ]]; then
-	    if [[ -d $submod ]]; then
+	    if [[ -d "${submod}" ]]; then
 		head=$(git -C $submod log --oneline -1)
 		y=$(basename $submod)
+		y=${y/\./${baseDir}}
+		y=${y/CodeDir/gchp/}
 		echo "${y:0:n_pad}${pad:0:$((n_pad - ${#y}))}: $head"
 	    fi
 	fi
@@ -232,14 +258,55 @@ function prepdir() {
     chgrp -R jacob_gcst $1
 }
 
+function checkCoards() {
+    ##### Checks netCDF files in a folder for COARDS compatibility #####
+    for file in ${1}/*.nc*; do
+	if [[ -f "${file}" ]]; then
+	    isCoards "${file}" > /dev/null
+	    echo "$? ${file}"
+	fi
+    done
+}
+
+function gprofout() {
+    ##### Directs output from gprofng to a file
+    ##### 1st argument: Directory w/ profile output
+    ##### 2nd argument: Metric to display (functions, callers, etc)
+    echo "${2}" | gprofng display text "${1}" > "${1}-${2}.txt"
+}
+
+function vtune_hs_by_line() {
+    ##### Make a hotspots report (grouped by line) from VTune output ####
+    vtune -report        "hotspots"                 \
+	  -result-dir    "${1}"                     \
+	  -format        "csv"                      \
+          -group-by      "source-line"              \
+          -report-output "${1}.hotspots.by-line.csv"
+}
+
+function vtune_hs_by_func() {
+    ##### Make a hotspots report (grouped by function) from VTune output ####
+    vtune -report        "hotspots"                 \
+	  -result-dir    "${1}"                     \
+	  -format        "csv"                      \
+          -group-by      "function"                 \
+          -report-output "${1}.hotspots.by-func.csv"
+}
+
 #============================================================================
-#  %%%%% Bash functions for miscellaneous Pandoc %%%%%
+#  %%%%% Bash functions for Pandoc %%%%%
 #============================================================================
 
 function mw2md() {
     ##### MediaWiki to MarkDown #####
     base=${1/.mw/}
     pandoc -f mediawiki -t markdown ${base}.mw -o ${base}.md
+}
+
+function mw2rst() {
+    ##### MediaWiki to MarkDown #####
+    base=${1/.mw/}
+    pandoc -f mediawiki -t rst ${base}.mw -o ${base}.rst
 }
 
 function latex2rst() {
@@ -267,8 +334,18 @@ function dos2unix() {
 
 function cm() {
     ##### CMatrix screen saver #####
-    export LANG=ja_JP.eucjp
-    cmatrix -acs
-    export LANG=en_US.utf8
+    cmatrix -as
 }
+
+function clean_logs() {
+    ##### Removes log and slurm*out files
+    rm -f *.log *.out
+}
+
+function dos2unix() {
+    ##### Convert a windows file to Unix #####
+    awk '{ sub("\r$", ""); print }' ${1} > temp.txt
+    mv temp.txt $1 > /dev/null
+}
+
 #EOC

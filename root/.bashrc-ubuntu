@@ -250,12 +250,4 @@ else
     alias deact='source deactivate'
 
 fi
-
-#==============================================================================
-# %%%%% PATH variable %%%%%
-#
-# NOTE: Add paths for Spack-built executables to the front of $PATH
-#==============================================================================
-export PATH="$GCC_BIN:$HOME/miniconda/bin:$PATH"
-
 #BOC
